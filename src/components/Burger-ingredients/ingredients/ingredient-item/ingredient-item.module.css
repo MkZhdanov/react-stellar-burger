@@ -1,0 +1,14 @@
+.ingredient_item {
+  position: relative;
+  text-align: center;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.description {
+  max-width: 272px;
+}
