@@ -3,6 +3,8 @@ import styles from "./burger-ingredients.module.css";
 import Tabs from "./tabs/tabs";
 import Ingredients from "./ingredients/ingredients";
 import { data } from "../../utils/data";
+import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 export default function BurgerIngredients() {
   return (
@@ -13,3 +15,7 @@ export default function BurgerIngredients() {
     </section>
   );
 }
+
+Ingredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType),
+};

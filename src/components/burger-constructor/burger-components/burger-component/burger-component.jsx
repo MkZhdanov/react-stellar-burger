@@ -5,6 +5,8 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { data } from "../../../../utils/data";
+import { ingredientPropType } from "../../../../utils/prop-types";
+import PropTypes from "prop-types";
 
 export default function BurgerComponent({ position, isLocked, iconVis, data }) {
   const visibility = iconVis ? styles.icon_visible : styles.icon_hidden;
@@ -23,3 +25,9 @@ export default function BurgerComponent({ position, isLocked, iconVis, data }) {
     </li>
   );
 }
+
+BurgerComponent.propTypes = {
+  position: PropTypes.oneOf(["top", "bottom"]),
+  iconVis: PropTypes.bool.isRequired,
+  data: ingredientPropType,
+};
