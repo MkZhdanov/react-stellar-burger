@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./ingredients.module.css";
 import IngredientGrid from "./ingredient-grid/ingredient-grid";
 import { component_tabs } from "../../../utils/data";
+import { ingredientPropType } from "../../../utils/prop-types";
+import PropTypes from "prop-types";
 
 export default function Ingredients({ data }) {
   return (
@@ -22,3 +24,7 @@ export default function Ingredients({ data }) {
     </ul>
   );
 }
+
+Ingredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType),
+};

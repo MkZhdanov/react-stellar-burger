@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./ingredient-grid.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
+import { ingredientPropType } from "../../../../utils/prop-types";
+import PropTypes from "prop-types";
 
 export default function IngredientGrid({ data, title }) {
   return (
@@ -14,3 +16,7 @@ export default function IngredientGrid({ data, title }) {
     </li>
   );
 }
+
+IngredientGrid.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType),
+};
