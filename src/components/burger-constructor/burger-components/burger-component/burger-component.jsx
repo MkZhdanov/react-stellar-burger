@@ -18,7 +18,11 @@ export default function BurgerComponent({ position, isLocked, iconVis, data }) {
       <ConstructorElement
         type={position}
         isLocked={isLocked}
-        text={data.name}
+        text={
+          data.name +
+          (position === "top" ? " (верх)" : "") +
+          (position === "bottom" ? " (низ)" : "")
+        }
         price={data.price}
         thumbnail={data.image}
       />
