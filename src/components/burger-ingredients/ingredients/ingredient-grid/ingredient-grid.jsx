@@ -19,4 +19,5 @@ export default function IngredientGrid({ data, title }) {
 
 IngredientGrid.propTypes = {
   data: PropTypes.arrayOf(ingredientPropType),
+  title: PropTypes.string,
 };

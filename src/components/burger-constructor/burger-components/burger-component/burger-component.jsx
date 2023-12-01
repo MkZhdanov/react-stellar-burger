@@ -29,5 +29,6 @@ export default function BurgerComponent({ position, isLocked, iconVis, data }) {
 BurgerComponent.propTypes = {
   position: PropTypes.oneOf(["top", "bottom"]),
   iconVis: PropTypes.bool.isRequired,
+  isLocked: PropTypes.bool,
   data: ingredientPropType,
 };
