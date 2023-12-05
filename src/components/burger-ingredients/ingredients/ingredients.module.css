@@ -1,0 +1,9 @@
+.container {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  max-height: calc(100vh - 88px - 100px - 56px - 40px - 40px);
+}
