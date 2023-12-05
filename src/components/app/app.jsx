@@ -4,7 +4,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-function App() {
+export default function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -15,5 +15,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
