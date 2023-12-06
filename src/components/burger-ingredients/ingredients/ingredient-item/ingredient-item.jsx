@@ -7,9 +7,22 @@ import {
 import { ingredientPropType } from "../../../../utils/prop-types";
 import PropTypes from "prop-types";
 
-export default function IngredientItem({ data }) {
+export default function IngredientItem({ data, onCardClick }) {
+  const handleClick = () => {
+    onCardClick(data);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
+  };
   return (
-    <div className={styles.ingredient_item}>
+    <div
+      className={styles.ingredient_item}
+      onClick={handleClick}
+      onKeyPress={handleKeyPress}
+    >
       <div>
         <img className="ml-4 mr-4" src={data.image} alt={data.name} />
         <div className={`${styles.price} mt-1 mb-1`}>
@@ -27,4 +40,5 @@ export default function IngredientItem({ data }) {
 
 IngredientItem.propTypes = {
   data: ingredientPropType,
+  onCardClick: PropTypes.func.isRequired,
 };
