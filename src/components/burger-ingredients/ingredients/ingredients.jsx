@@ -5,11 +5,12 @@ import { component_tabs } from "../../../utils/data";
 import { ingredientPropType } from "../../../utils/prop-types";
 import PropTypes from "prop-types";
 
-export default function Ingredients({ data }) {
+export default function Ingredients({ onCardClick, data }) {
   return (
     <ul className={`${styles.container} custom-scroll`}>
       {component_tabs.map((tabItem) => (
         <IngredientGrid
+          onCardClick={onCardClick}
           key={tabItem.type}
           title={tabItem.text}
           data={
@@ -27,4 +28,5 @@ export default function Ingredients({ data }) {
 
 Ingredients.propTypes = {
   data: PropTypes.arrayOf(ingredientPropType),
+  onCardClick: PropTypes.func.isRequired,
 };
