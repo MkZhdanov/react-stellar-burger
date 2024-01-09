@@ -88,20 +88,15 @@ export const test_burger = [
   },
 ];
 
-export const component_tabs = [
-  {
-    type: "bun",
-    text: "Булки",
-  },
-  {
-    type: "sauce",
-    text: "Соусы",
-  },
-  {
-    type: "main",
-    text: "Начинки",
-  },
-];
+export const component_tabs = {
+  bun: "Булки",
+  sauce: "Соусы",
+  main: "Начинки",
+};
+
+export const TAB_OFFSET = 10;
+
+export const ROW_HEIGHT_THRESHOLD = 30;
 
 export const data = [
   {

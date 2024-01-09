@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./components/app/app";
-import reportWebVitals from "./reportWebVitals";
 import { compose, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { rootReducer } from "./services/reducers";
+import "./index.css";
+import App from "./components/app/app";
+import reportWebVitals from "./reportWebVitals";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

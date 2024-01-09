@@ -36,7 +36,7 @@ export const postFetchBurgerRequest = async (ingredients) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Ошибка при получении ингредиентов:", error);
+    console.error("Ошибка при оформлении заказа:", error);
     throw error;
   }
 };
