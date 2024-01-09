@@ -1,28 +1,23 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import styles from "./ingredient-details.module.css";
-import PropTypes from "prop-types";
 import EnergyItem from "./energy-item/energy-item";
-import { ingredientPropType } from "../../utils/prop-types.js";
 
-export default function IngredientDetails({ data }) {
+export default function IngredientDetails() {
+  const { name, image, energy } = useSelector(
+    (state) => state.selectedIngredient.ingredient
+  );
+
+  const energyItems = useMemo(() => {
+    return energy.map(({ name, value }, index) => (
+      <EnergyItem key={index} title={name} value={value} />
+    ));
+  }, [energy]);
   return (
     <div className={styles.info}>
-      <img
-        className={`${styles.img} pl-5 pr-5 mb-4`}
-        src={data.image}
-        alt={data.name}
-      />
-      <p className="text text_type_main-medium mt-4 mb-8">{data.name}</p>
-      <ul className={`${styles.list} mt-8`}>
-        <EnergyItem title="Калории,ккал" value={data.calories} />
-        <EnergyItem title="Белки, г" value={data.proteins} />
-        <EnergyItem title="Жиры, г" value={data.fat} />
-        <EnergyItem title="Углеводы, г" value={data.carbohydrates} />
-      </ul>
+      <img className={`${styles.img} pl-5 pr-5 mb-4`} src={image} alt={name} />
+      <p className="text text_type_main-medium mt-4 mb-8">{name}</p>
+      <ul className={`${styles.list} mt-8`}>{energyItems}</ul>
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: ingredientPropType,
-};
