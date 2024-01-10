@@ -7,3 +7,5 @@ export const component_tabs = {
 };
 
 export const generateKey = () => uuidv4();
+
+export const BASE_URL = "https://norma.nomoreparties.space/api/";
