@@ -34,8 +34,7 @@ export const selectedIngredientReducer = (state = initialState, action) => {
     }
     case RESET_SELECTED_INGREDIENT: {
       return {
-        ...state,
-        ingredient: null,
+        initialState,
       };
     }
     default: {
