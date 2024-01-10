@@ -16,8 +16,12 @@ export default function BurgerComponents() {
 
   const renderedIngredients = useMemo(() => {
     if (burgerIngredients) {
-      return burgerIngredients.map((item, index) => (
-        <BurgerComponent iconVis={true} data={item} key={index} />
+      return burgerIngredients.map((ingredient) => (
+        <BurgerComponent
+          iconVis={true}
+          data={ingredient}
+          key={ingredient.key}
+        />
       ));
     }
     return null;

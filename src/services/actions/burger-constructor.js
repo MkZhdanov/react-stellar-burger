@@ -23,7 +23,7 @@ export const removeBunBurger = () => ({
   type: REMOVE_BUN_BURGER,
 });
 
-export const updateIngredientOrder = (startIndex, endIndex) => ({
+export const updateIngredientOrder = (firstKey, secondKey) => ({
   type: UPDATE_INGREDIENT_ORDER,
-  payload: { startIndex, endIndex },
+  payload: { firstKey, secondKey },
 });

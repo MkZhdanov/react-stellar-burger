@@ -1,3 +1,4 @@
+import { generateKey } from "../../utils/data";
 import {
   ADD_BUN_BURGER,
   ADD_INGREDIENT_BURGER,
@@ -34,16 +35,15 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
       };
     }
     case ADD_INGREDIENT_BURGER: {
-      const newIndex = state.counterIndex + 1;
+      const key = generateKey();
       return {
         ...state,
-        ingredients: [...state.ingredients, { ...payload, index: newIndex }],
-        counterIndex: newIndex,
+        ingredients: [...state.ingredients, { ...payload, key }],
       };
     }
     case REMOVE_INGREDIENT_BURGER: {
       const ingredientIndex = state.ingredients.findIndex(
-        (ingredient) => ingredient.index === payload
+        (ingredient) => ingredient.key === payload
       );
       if (ingredientIndex !== -1) {
         const updatedIngredients = [...state.ingredients];
@@ -56,18 +56,16 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
       return state;
     }
     case UPDATE_INGREDIENT_ORDER: {
-      const { startIndex, endIndex } = payload;
+      const { firstKey, secondKey } = payload;
       const updatedIngredients = [...state.ingredients];
       const indexFirstElement = updatedIngredients.findIndex(
-        (ingredient) => ingredient.index === startIndex
+        (ingredient) => ingredient.key === firstKey
       );
       const indexSecondElement = updatedIngredients.findIndex(
-        (ingredient) => ingredient.index === endIndex
+        (ingredient) => ingredient.key === secondKey
       );
-      const temp = updatedIngredients[indexFirstElement];
-      updatedIngredients[indexFirstElement] =
-        updatedIngredients[indexSecondElement];
-      updatedIngredients[indexSecondElement] = temp;
+      const [movedIngredient] = updatedIngredients.splice(indexFirstElement, 1);
+      updatedIngredients.splice(indexSecondElement, 0, movedIngredient);
       return {
         ...state,
         ingredients: updatedIngredients,
