@@ -20,11 +20,7 @@ export const createOrder = (ingredients) => async (dispatch) => {
   dispatch(createOrderRequest());
   try {
     const order = await postFetchBurgerRequest(ingredients);
-    if (order && order.success) {
-      dispatch(createOrderSuccess(order.order));
-    } else {
-      throw new Error("error");
-    }
+    dispatch(createOrderSuccess(order.order));
   } catch (error) {
     dispatch(createOrderFailure(error.message));
   }

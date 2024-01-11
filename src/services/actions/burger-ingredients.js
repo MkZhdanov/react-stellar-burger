@@ -22,11 +22,7 @@ export const getIngredients = () => async (dispatch) => {
   dispatch(fetchIngredientsRequest());
   try {
     const ingredients = await getFetchIngredientsRequest();
-    if (ingredients && ingredients.success) {
-      dispatch(getIngredientsSuccess(ingredients.data));
-    } else {
-      throw new Error("error");
-    }
+    dispatch(getIngredientsSuccess(ingredients.data));
   } catch (error) {
     dispatch(getIngredientsFailure(error.message));
   }

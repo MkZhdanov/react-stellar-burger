@@ -1,3 +1,4 @@
+import { generateKey } from "../../utils/data";
 export const ADD_BUN_BURGER = "ADD_BUN_BURGER";
 export const ADD_INGREDIENT_BURGER = "ADD_INGREDIENT_BURGER";
 export const REMOVE_INGREDIENT_BURGER = "REMOVE_INGREDIENT_BURGER";
@@ -11,7 +12,7 @@ export const addBunBurger = (bun) => ({
 
 export const addIngredientBurger = (ingredient) => ({
   type: ADD_INGREDIENT_BURGER,
-  payload: ingredient,
+  payload: { ...ingredient, key: generateKey() },
 });
 
 export const removeIngredientBurger = (ingredientIndex) => ({

@@ -1,4 +1,3 @@
-import { generateKey } from "../../utils/data";
 import {
   ADD_BUN_BURGER,
   ADD_INGREDIENT_BURGER,
@@ -35,10 +34,9 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
       };
     }
     case ADD_INGREDIENT_BURGER: {
-      const key = generateKey();
       return {
         ...state,
-        ingredients: [...state.ingredients, { ...payload, key }],
+        ingredients: [...state.ingredients, payload],
       };
     }
     case REMOVE_INGREDIENT_BURGER: {
