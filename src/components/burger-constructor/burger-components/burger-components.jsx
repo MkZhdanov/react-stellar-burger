@@ -44,9 +44,21 @@ export default function BurgerComponents() {
       ref={drop}
       style={{ opacity: isHover ? 0.5 : 1 }}
     >
-      <BurgerComponent position="top" iconVis={false} data={burgerBun} />
-      <ul className={`${styles.list} custom-scroll`}>{renderedIngredients}</ul>
-      <BurgerComponent position="bottom" iconVis={false} data={burgerBun} />
+      {burgerBun ? (
+        <>
+          <BurgerComponent position="top" iconVis={false} data={burgerBun} />
+          <ul className={`${styles.list} custom-scroll`}>
+            {renderedIngredients}
+          </ul>
+          <BurgerComponent position="bottom" iconVis={false} data={burgerBun} />
+        </>
+      ) : (
+        <div className={`${styles.item}`}>
+          <h3>
+            Пожалуйста, перенесите сюда булку и ингредиенты для создания заказа
+          </h3>
+        </div>
+      )}
     </div>
   );
 }

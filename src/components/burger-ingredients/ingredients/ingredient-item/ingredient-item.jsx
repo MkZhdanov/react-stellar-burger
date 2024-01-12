@@ -31,15 +31,20 @@ export default function IngredientItem({ data }) {
   );
 
   const count = useMemo(() => {
-    if (data.type === "bun") {
-      return data._id === burgerBun._id ? 2 : 0;
-    } else {
-      return burgerIngredients.reduce(
-        (col, ingredient) => (ingredient._id === id ? col + 1 : col),
-        0
-      );
+    const countIngredients = burgerIngredients.filter(
+      (item) => item._id === data._id
+    );
+
+    let countBun = 0;
+    if (burgerBun) {
+      if (burgerBun._id === data._id) {
+        countBun = 2;
+        return countBun;
+      }
     }
-  }, [data, burgerBun, burgerIngredients]);
+
+    return countIngredients.length + countBun;
+  }, [burgerIngredients, burgerBun, data]);
 
   const [{ isDrag }, drag, preview] = useDrag({
     type: "ingredient",
