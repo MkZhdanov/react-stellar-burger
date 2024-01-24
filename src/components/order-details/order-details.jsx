@@ -1,12 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styles from "./order-details.module.css";
 import successImg from "../../assets/images/done.jpg";
 
 export default function OrderDetails() {
+  const { number } = useSelector((state) => state.createdOrder.order);
+
   return (
     <div className={styles.info}>
       <p className={`${styles.btn} text text_type_digits-large mt-4 mb-6`}>
-        034536
+        {number}
       </p>
       <p className="text text_type_main-medium mt-6 mb-10">
         идентификатор заказа

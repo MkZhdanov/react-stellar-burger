@@ -15,3 +15,10 @@
   gap: 16px;
   overflow-y: scroll;
 }
+
+.item {
+  font-family: "Jet Brains Mono";
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1.1;
+}

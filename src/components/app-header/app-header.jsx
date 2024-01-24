@@ -7,6 +7,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+// Комопнент шапки приложения
 export default function AppHeader() {
   return (
     <header className={`${styles.header} mt-10 mr-10 ml-10`}>
