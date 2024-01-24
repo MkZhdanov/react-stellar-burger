@@ -6,10 +6,11 @@ import { selectedIngredientReducer } from "./ingredient-details";
 import { orderReducer } from "./order-details";
 import { tabsReducer } from "./tabs";
 
+// Корневой редюсер, объединяющий все редюсеры
 export const rootReducer = combineReducers({
-  ingredients: ingredientsReducer,
-  burgerIngredients: burgerIngredientsReducer,
-  selectedIngredient: selectedIngredientReducer,
-  createdOrder: orderReducer,
-  tabs: tabsReducer,
+  ingredients: ingredientsReducer, // Хранилище ингредиентов
+  burgerIngredients: burgerIngredientsReducer, // Хранилище бургерных ингредиентов
+  selectedIngredient: selectedIngredientReducer, // Хранилище выбранного ингредиента
+  createdOrder: orderReducer, // Хранилище заказа
+  tabs: tabsReducer, // Хранилище вкладок
 });

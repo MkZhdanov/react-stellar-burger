@@ -4,15 +4,18 @@ import {
   GET_INGREDIENTS_FAILURE,
 } from "../actions/burger-ingredients";
 
+// Начальное состояние для редьюсера ингредиентов
 const initialState = {
   loading: true,
   error: null,
   ingredients: [],
 };
 
+// Редьюсер для управления состоянием ингредиентов
 export const ingredientsReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    // Обработка начала загрузки ингредиентов
     case FETCH_INGREDIENTS_REQUEST: {
       return {
         ...state,
@@ -20,6 +23,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         error: null,
       };
     }
+    // Обработка успешной загрузки ингредиентов
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
@@ -27,6 +31,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredients: payload,
       };
     }
+    // Обработка ошибки при загрузке ингредиентов
     case GET_INGREDIENTS_FAILURE: {
       return {
         ...state,

@@ -13,14 +13,18 @@ import {
 import { ingredientPropType } from "../../../../utils/prop-types";
 import PropTypes from "prop-types";
 
+// Компонент ингридиента бургера
 export default function BurgerComponent({ position, iconVis, data }) {
   const dispatch = useDispatch();
+  // Иконка для перетаскивания ингридиентов
   const visibility = iconVis ? styles.icon_visible : styles.icon_hidden;
 
+  // Функция для обработки удаления ингредиента
   const handleIngredientDelete = () => {
     dispatch(removeIngredientBurger(data.key));
   };
 
+  // Хук для перетаскивания
   const [{ isDrag }, drag] = useDrag({
     type: "item",
     item: data,
@@ -29,6 +33,7 @@ export default function BurgerComponent({ position, iconVis, data }) {
     }),
   });
 
+  // Хук для обработки бросания
   const [, drop] = useDrop({
     accept: "item",
     hover: (item) => {
@@ -40,11 +45,14 @@ export default function BurgerComponent({ position, iconVis, data }) {
     },
   });
 
+  // Создаем общий реф
   const sharedRef = useRef();
+  // Привязываем общий реф к обоим хукам
   if (iconVis) {
     drag(sharedRef);
     drop(sharedRef);
   }
+
   return (
     <li
       className={styles.container}

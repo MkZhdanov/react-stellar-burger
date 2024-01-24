@@ -3,6 +3,7 @@ import styles from "./modal-header.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 
+// Компонент шапки модального окна
 export default function ModalHeader({ title, close }) {
   return (
     <div className={styles.header}>

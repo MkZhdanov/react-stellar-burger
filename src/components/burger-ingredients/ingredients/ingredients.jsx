@@ -7,13 +7,18 @@ import { setActiveTab } from "../../../services/actions/tabs";
 import { ingredientPropType } from "../../../utils/prop-types";
 import PropTypes from "prop-types";
 
+// Компонент отображения ингредиентов
 export default function Ingredients() {
+  // Получение состояний из Redux
   const { activeTab, scrollRefs } = useSelector((state) => state.tabs);
   const dispatch = useDispatch();
+  // Массив ключей для вкладок
   const tabKeys = Object.keys(component_tabs);
+
   const TAB_OFFSET = 10;
   const ROW_HEIGHT_THRESHOLD = 15;
 
+  // Функция для расчета расстояния от верха контейнера до ближайшей вкладки
   const calculateDistanceFromTop = useCallback(
     (targetElement) => {
       const containerRect = targetElement.getBoundingClientRect();
@@ -41,6 +46,7 @@ export default function Ingredients() {
     [tabKeys, scrollRefs]
   );
 
+  // Обработчик события скролла
   const scrollHandler = useCallback(
     (event) => {
       const newRow = calculateDistanceFromTop(event.currentTarget);
@@ -49,6 +55,7 @@ export default function Ingredients() {
     [calculateDistanceFromTop, dispatch, activeTab]
   );
 
+  // Создание компонентов строк с ингредиентами
   const ingredientsGrids = useMemo(
     () => tabKeys.map((tab) => <IngredientGrid key={tab} tab={tab} />),
     [tabKeys]

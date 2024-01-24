@@ -7,7 +7,9 @@ import ModalOverlay from "./modal-overlay/modal-overlay";
 
 const modalRoot = document.getElementById("portal-root");
 
+// Компонент модального окна
 export default function Modal({ children, title, onClose }) {
+  // Обработка события нажатия на клавишу "Escape" для закрытия модального окна
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {

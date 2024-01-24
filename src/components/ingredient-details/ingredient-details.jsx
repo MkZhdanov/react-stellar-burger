@@ -3,16 +3,20 @@ import { useSelector } from "react-redux";
 import styles from "./ingredient-details.module.css";
 import EnergyItem from "./energy-item/energy-item";
 
+// Основной компонент для информации об ингридиенте
 export default function IngredientDetails() {
+  // Получение данных об ингредиенте из Redux
   const { name, image, energy } = useSelector(
     (state) => state.selectedIngredient.ingredient
   );
 
+  // Проверка существования данных ингредиента
   const energyItems = useMemo(() => {
     return energy.map(({ name, value }, index) => (
       <EnergyItem key={index} title={name} value={value} />
     ));
   }, [energy]);
+
   return (
     <div className={styles.info}>
       <img className={`${styles.img} pl-5 pr-5 mb-4`} src={image} alt={name} />

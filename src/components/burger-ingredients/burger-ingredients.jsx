@@ -5,11 +5,14 @@ import Tabs from "./tabs/tabs";
 import Ingredients from "./ingredients/ingredients";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 
+// Основной компонент для страницы с ингредиентами
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
+  // Получение состояния загрузки и ошибок
   const loading = useSelector((state) => state.ingredients.loading);
   const error = useSelector((state) => state.ingredients.error);
 
+  // Эффект, выполняющий запрос на получение ингредиентов при загрузке компонента
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);

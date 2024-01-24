@@ -5,6 +5,7 @@ import successImg from "../../assets/images/done.jpg";
 
 export default function OrderDetails() {
   const { number } = useSelector((state) => state.createdOrder.order);
+
   return (
     <div className={styles.info}>
       <p className={`${styles.btn} text text_type_digits-large mt-4 mb-6`}>

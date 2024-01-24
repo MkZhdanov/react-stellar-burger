@@ -3,8 +3,8 @@ import styles from "./burger-constructor.module.css";
 import BurgerComponents from "./burger-components/burger-components";
 import OrderInfo from "./order-info/order-info";
 import { useSelector } from "react-redux";
-import Modal from "../modal/modal";
 
+// Основной компонент для страницы с ингредиентами бургера
 export default function BurgerConstructor() {
   const { bun: burgerBun } = useSelector((state) => state.burgerIngredients);
   return (

@@ -5,13 +5,17 @@ import styles from "./tabs.module.css";
 import { setActiveTab } from "../../../services/actions/tabs";
 import { component_tabs } from "../../../utils/data";
 
+// Компонент вкладок для выбора категории ингредиентов
 export default function Tabs() {
   const dispatch = useDispatch();
+  // Получение активной вкладки и ссылок на элементы
   const activeTab = useSelector((state) => state.tabs.activeTab);
   const scrollRefs = useSelector((state) => state.tabs.scrollRefs);
 
+  // Массив ключей для вкладок
   const tabKeys = Object.keys(component_tabs);
 
+  // Функция прокрутки к выбранной вкладке
   const scrollToTab = useCallback((scrollRef) => {
     scrollRef.current?.scrollIntoView({
       block: "start",
@@ -19,6 +23,7 @@ export default function Tabs() {
     });
   }, []);
 
+  // Обработчик изменения вкладки
   const handleTabChange = useCallback(
     (selectedTab) => {
       dispatch(setActiveTab(selectedTab));
@@ -27,6 +32,7 @@ export default function Tabs() {
     [dispatch, scrollToTab, scrollRefs]
   );
 
+  // Создание элементов вкладок
   const tabElements = useMemo(
     () =>
       tabKeys.map((tab) => (

@@ -8,19 +8,23 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { openSelectedIngredient } from "../../../../services/actions/ingredient-details";
 import { ingredientPropType } from "../../../../utils/prop-types";
-import PropTypes from "prop-types";
 
+// Компонент для отображения ингредиента
 export default function IngredientItem({ data }) {
   const dispatch = useDispatch();
+  // Извлекаем необходимые данные из объекта ингредиента
   const { _id: id, image, image_mobile, name, price } = data;
+  // Получение булочки и ингридиентов для бургера
   const { bun: burgerBun, ingredients: burgerIngredients } = useSelector(
     (state) => state.burgerIngredients
   );
 
+  // Обработчик клика для выбора ингредиента
   const handleClick = useCallback(() => {
     dispatch(openSelectedIngredient(data));
   }, [dispatch, data]);
 
+  // Обработчик нажатия клавиши Enter для выбора ингредиента
   const handleKeyPress = useCallback(
     (event) => {
       if (event.key === "Enter") {
@@ -30,6 +34,7 @@ export default function IngredientItem({ data }) {
     [dispatch, data]
   );
 
+  // Вычисление количества ингредиента в бургере с использованием useMemo
   const count = useMemo(() => {
     const countIngredients = burgerIngredients.filter(
       (item) => item._id === data._id
@@ -46,6 +51,7 @@ export default function IngredientItem({ data }) {
     return countIngredients.length + countBun;
   }, [burgerIngredients, burgerBun, data]);
 
+  // Использование библиотеки для реализации Drag and Drop
   const [{ isDrag }, drag, preview] = useDrag({
     type: "ingredient",
     item: data,

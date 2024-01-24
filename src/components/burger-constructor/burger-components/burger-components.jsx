@@ -8,12 +8,14 @@ import {
   addIngredientBurger,
 } from "../../../services/actions/burger-constructor";
 
+// Компонент для игридиентов бургера
 export default function BurgerComponents() {
   const dispatch = useDispatch();
   const { bun: burgerBun, ingredients: burgerIngredients } = useSelector(
     (state) => state.burgerIngredients
   );
 
+  // Использование useMemo для оптимизации рендера
   const renderedIngredients = useMemo(() => {
     if (burgerIngredients) {
       return burgerIngredients.map((ingredient) => (
@@ -27,6 +29,7 @@ export default function BurgerComponents() {
     return null;
   }, [burgerIngredients]);
 
+  // Использование useDrop для обработки бросания ингредиентов
   const [{ isHover }, drop] = useDrop({
     accept: "ingredient",
     collect: (monitor) => ({
