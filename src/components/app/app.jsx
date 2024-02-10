@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -9,6 +10,9 @@ import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { closeSelectedIngredient } from "../../services/actions/ingredient-details";
 import { closeOrderModal } from "../../services/actions/order-details";
+import LoginPage from "../../pages/login/login";
+import Constructor from "../../pages/constructor/constructor";
+import RegisterPage from "../../pages/register/register";
 
 // Основной компонент приложения
 export default function App() {
@@ -34,21 +38,26 @@ export default function App() {
   };
   return (
     <div className={styles.app}>
-      <AppHeader />
-      <main className={styles.main}>
-        <BurgerIngredients />
-        <BurgerConstructor />
-      </main>
-      {errorModalOrder === null && !loadingModalOrder && openModalOrder && (
-        <Modal onClose={closeModal}>
-          <OrderDetails />
-        </Modal>
-      )}
-      {openModalIngredient && (
-        <Modal title="Детали ингредиента" onClose={closeModal}>
-          <IngredientDetails />
-        </Modal>
-      )}
+      <Router>
+        <AppHeader />
+        <main className={styles.main}>
+          <Routes>
+            <Route path="/" element={<Constructor />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Routes>
+        </main>
+        {errorModalOrder === null && !loadingModalOrder && openModalOrder && (
+          <Modal onClose={closeModal}>
+            <OrderDetails />
+          </Modal>
+        )}
+        {openModalIngredient && (
+          <Modal title="Детали ингредиента" onClose={closeModal}>
+            <IngredientDetails />
+          </Modal>
+        )}
+      </Router>
     </div>
   );
 }
