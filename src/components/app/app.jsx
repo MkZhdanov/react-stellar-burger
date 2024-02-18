@@ -13,6 +13,8 @@ import { closeOrderModal } from "../../services/actions/order-details";
 import LoginPage from "../../pages/login/login";
 import Constructor from "../../pages/constructor/constructor";
 import RegisterPage from "../../pages/register/register";
+import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
+import ResetPasswordPage from "../../pages/reset-password/reset-password";
 
 // Основной компонент приложения
 export default function App() {
@@ -45,6 +47,8 @@ export default function App() {
             <Route path="/" element={<Constructor />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
           </Routes>
         </main>
         {errorModalOrder === null && !loadingModalOrder && openModalOrder && (
