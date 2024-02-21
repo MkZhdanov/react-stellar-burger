@@ -16,6 +16,7 @@ import RegisterPage from "../../pages/register/register";
 import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
+import { fetchCheckAccess } from "../../services/actions/auth";
 
 // Основной компонент приложения
 export default function App() {
@@ -39,6 +40,11 @@ export default function App() {
     if (errorModalOrder === null && !loadingModalOrder && openModalOrder)
       dispatch(closeOrderModal());
   };
+
+  React.useEffect(() => {
+    dispatch(fetchCheckAccess());
+  }, [dispatch]);
+
   return (
     <div className={styles.app}>
       <Router>

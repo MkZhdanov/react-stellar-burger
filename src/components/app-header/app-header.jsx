@@ -16,7 +16,7 @@ export default function AppHeader() {
           <li>
             <a
               className={`${styles.link} ${styles.link_active} mt-4 mb-4 mr-5 ml-5`}
-              href="#"
+              href="/"
             >
               <BurgerIcon type="primary" />
               <span className="text text_type_main-default">Конструктор</span>
@@ -34,7 +34,7 @@ export default function AppHeader() {
         <a href="#">
           <Logo />
         </a>
-        <a className={`${styles.link} mt-4 mb-4 mr-5 ml-5`} href="#">
+        <a className={`${styles.link} mt-4 mb-4 mr-5 ml-5`} href="/profile">
           <ProfileIcon type="secondary" />
           <span className="text text_type_main-default text_color_inactive">
             Личный кабинет

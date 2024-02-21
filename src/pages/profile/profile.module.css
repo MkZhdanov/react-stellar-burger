@@ -1,7 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: row;
   margin-top: 120px;
   gap: 60px;
@@ -36,4 +36,9 @@
 
 .text {
   opacity: 40%;
+}
+
+.buttonBlock {
+  display: flex;
+  align-self: flex-end;
 }
