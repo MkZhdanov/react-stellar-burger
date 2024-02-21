@@ -17,6 +17,7 @@ import ForgotPasswordPage from "../../pages/forgot-password/forgot-password";
 import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
 import { fetchCheckAccess } from "../../services/actions/auth";
+import { Auth, UnAuth } from "../protected-route/protected-route";
 
 // Основной компонент приложения
 export default function App() {
@@ -51,12 +52,27 @@ export default function App() {
         <AppHeader />
         <main className={styles.main}>
           <Routes>
-            <Route path="/" element={<Constructor />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/" element={<Auth component={<Constructor />} />} />
+            <Route
+              path="/login"
+              element={<UnAuth component={<LoginPage />} />}
+            />
+            <Route
+              path="/register"
+              element={<UnAuth component={<RegisterPage />} />}
+            />
+            <Route
+              path="/forgot-password"
+              element={<UnAuth uth component={<ForgotPasswordPage />} />}
+            />
+            <Route
+              path="/reset-password"
+              element={<UnAuth component={<ResetPasswordPage />} />}
+            />
+            <Route
+              path="/profile"
+              element={<Auth component={<ProfilePage />} />}
+            />
           </Routes>
         </main>
         {errorModalOrder === null && !loadingModalOrder && openModalOrder && (
