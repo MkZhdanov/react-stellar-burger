@@ -13,7 +13,9 @@ import {
 import styles from "./reset-password.module.css";
 
 export default function ResetPasswordPage() {
-  const { resetPasswordForm } = useSelector((state) => state.auth);
+  const { resetPasswordForm, forgotPasswordSubmit } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,6 +27,10 @@ export default function ResetPasswordPage() {
     e.preventDefault();
     dispatch(fetchResetPassword(resetPasswordForm));
   };
+
+  console.log(forgotPasswordSubmit);
+
+  if (!forgotPasswordSubmit) return <Navigate to="/forgot-password" />;
 
   return (
     <div className={styles.container}>

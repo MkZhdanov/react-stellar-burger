@@ -26,10 +26,6 @@ export default function ForgotPasswordPage() {
     dispatch(fetchForgotPassword(forgotPasswordForm, goToResetPage));
   }
 
-  function logMessage() {
-    console.log("success");
-  }
-
   return (
     <div className={styles.container}>
       <h2 className={`text text_type_main-medium text_color_primary mb-6`}>
