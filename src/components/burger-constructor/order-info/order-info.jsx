@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styles from "./order-info.module.css";
 import {
   Button,
@@ -9,7 +10,10 @@ import { createOrder } from "../../../services/actions/order-details";
 
 // Компонент для отображения цены бургера и кнопки оформления заказа
 export default function OrderInfo() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { userAuth } = useSelector((state) => state.auth);
   // Получаем данные о булочке и ингредиентах из Redux-стейта
   const { bun, ingredients } = useSelector((state) => state.burgerIngredients);
 
@@ -32,6 +36,10 @@ export default function OrderInfo() {
 
   // Обработчик клика по кнопке оформления заказа
   const handleOrderButtonClick = () => {
+    if (!userAuth) {
+      navigate("/login");
+      return;
+    }
     dispatch(createOrder(order));
   };
   return (

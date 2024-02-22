@@ -8,6 +8,7 @@ export const RESET_SELECTED_INGREDIENT = "RESET_SELECTED_INGREDIENT";
 // Открывает модальное окно с деталями выбранного ингредиента
 export const openSelectedIngredient =
   ({
+    _id = "",
     name = "",
     proteins = 0,
     fat = 0,
@@ -19,6 +20,7 @@ export const openSelectedIngredient =
     dispatch({
       type: SET_SELECTED_INGREDIENT,
       payload: {
+        _id,
         name,
         image,
         energy: [

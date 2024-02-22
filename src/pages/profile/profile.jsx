@@ -13,7 +13,7 @@ import { fetchLogout, fetchUpdateUserInfo } from "../../services/actions/auth";
 
 export default function ProfilePage() {
   const link = `${styles.link} text text_type_main-medium `;
-  const activelink = "text_color_primary";
+  const activeLink = "text_color_primary";
   const inactiveLink = "text_color_inactive ";
 
   const { user } = useSelector((state) => state.auth);
@@ -21,7 +21,11 @@ export default function ProfilePage() {
 
   const [value, setValue] = React.useState(user);
 
-  const [input, setInput] = React.useState({ name: false, email: false });
+  const [input, setInput] = React.useState({
+    name: false,
+    email: false,
+    password: "",
+  });
 
   const refreshToken = getCookie("refreshToken");
 
@@ -37,7 +41,7 @@ export default function ProfilePage() {
   };
 
   function onReset() {
-    setValue({ name: user.name, email: user.email });
+    setValue({ name: user.name, email: user.email, password: "" });
     setIsChange(false);
   }
 
@@ -55,7 +59,7 @@ export default function ProfilePage() {
             to="/profile"
             end
             className={({ isActive }) =>
-              link + (isActive ? activelink : inactiveLink)
+              link + (isActive ? activeLink : inactiveLink)
             }
           >
             Профиль
@@ -63,7 +67,7 @@ export default function ProfilePage() {
           <NavLink
             to="/profile/orders"
             className={({ isActive }) =>
-              link + (isActive ? activelink : inactiveLink)
+              link + (isActive ? activeLink : inactiveLink)
             }
           >
             История заказов
@@ -87,8 +91,6 @@ export default function ProfilePage() {
           value={value?.name || ""}
           placeholder={"Имя"}
           name={"name"}
-          icon={"EditIcon"}
-          onIconClick={() => setInput({ ...input, name: !input.name })}
           extraClass="mb-6"
         />
         <EmailInput
@@ -96,18 +98,16 @@ export default function ProfilePage() {
           value={value?.email || ""}
           name={"email"}
           placeholder={"Логин"}
-          icon={"EditIcon"}
-          onIconClick={() => setInput({ ...input, email: !input.email })}
+          isIcon={true}
           extraClass="mb-6"
         />
         <PasswordInput
           onChange={onChange}
-          value={value?.password || "*******"}
+          value={value?.password || ""}
           name={"password"}
           placeholder={"Пароль"}
-          icon={"EditIcon"}
+          icon="EditIcon"
           extraClass="mb-6"
-          disabled
         />
         {isChange && (
           <div className={` ${styles.buttonBlock}`}>

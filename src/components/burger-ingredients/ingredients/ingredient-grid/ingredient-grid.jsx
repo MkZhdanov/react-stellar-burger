@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 export default function IngredientGrid({ tab }) {
   const dispatch = useDispatch();
   // Получение списка ингредиентов
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const ingredients = useSelector((state) => state.ingredientsData.ingredients);
   // Создание ref для текущей строки
   const rowRef = useRef(null);
 
