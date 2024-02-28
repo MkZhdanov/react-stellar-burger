@@ -1,0 +1,76 @@
+.container {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.list {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  max-height: calc(100vh - 88px - 40px - 40px - 40px - 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.itemContainer {
+  background: var(--background);
+  border-radius: var(--common-border-radius-s);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: var(--common-transition);
+}
+
+.itemContainer:hover {
+  opacity: 0.8;
+}
+
+.itemContainer:focus {
+  opacity: 0.8;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.itemList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.number::before {
+  content: "#";
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 8;
+}
+
+.ingredientContainer {
+  position: relative;
+  background-color: #131316;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid #801ab2;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.5);
+  transition: var(--common-transition);
+}

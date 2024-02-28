@@ -24,6 +24,7 @@ import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile/profile";
 import { fetchCheckAccess } from "../../services/actions/auth";
 import { Auth, UnAuth } from "../protected-route/protected-route";
+import FeedPage from "../../pages/feed/feed";
 
 import { getIngredients } from "../../services/actions/ingredients";
 
@@ -78,39 +79,45 @@ export default function App() {
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
-        <Routes location={background || location}>
-          <Route path="/" element={<Constructor />} />
-          <Route path="/login" element={<UnAuth component={<LoginPage />} />} />
-          <Route
-            path="/register"
-            element={<UnAuth component={<RegisterPage />} />}
-          />
-          <Route
-            path="/forgot-password"
-            element={<UnAuth uth component={<ForgotPasswordPage />} />}
-          />
-          <Route
-            path="/reset-password"
-            element={<UnAuth component={<ResetPasswordPage />} />}
-          />
-          <Route
-            path="/profile"
-            element={<Auth component={<ProfilePage />} />}
-          />
-          <Route path="/ingredients/:id" element={<IngredientDetails />} />
-        </Routes>
-        {background && (
-          <Routes>
+        <div className={`${styles.container} pr-5 pl-5`}>
+          <Routes location={background || location}>
+            <Route path="/" element={<Constructor />} />
             <Route
-              path="/ingredients/:id"
-              element={
-                <Modal title="Детали ингредиента" onClose={handleModalClose}>
-                  <IngredientDetails />
-                </Modal>
-              }
+              path="/login"
+              element={<UnAuth component={<LoginPage />} />}
             />
+            <Route
+              path="/register"
+              element={<UnAuth component={<RegisterPage />} />}
+            />
+            <Route
+              path="/forgot-password"
+              element={<UnAuth uth component={<ForgotPasswordPage />} />}
+            />
+            <Route
+              path="/reset-password"
+              element={<UnAuth component={<ResetPasswordPage />} />}
+            />
+            <Route
+              path="/profile"
+              element={<Auth component={<ProfilePage />} />}
+            />
+            <Route path="/ingredients/:id" element={<IngredientDetails />} />
+            <Route path="/feed" element={<FeedPage />} />
           </Routes>
-        )}
+          {background && (
+            <Routes>
+              <Route
+                path="/ingredients/:id"
+                element={
+                  <Modal title="Детали ингредиента" onClose={handleModalClose}>
+                    <IngredientDetails />
+                  </Modal>
+                }
+              />
+            </Routes>
+          )}
+        </div>
       </main>
       {errorModalOrder === null && !loadingModalOrder && openModalOrder && (
         <Modal onClose={closeModal}>
