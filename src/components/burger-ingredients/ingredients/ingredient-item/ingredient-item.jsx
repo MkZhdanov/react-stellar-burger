@@ -9,6 +9,8 @@ import {
 import { openSelectedIngredient } from "../../../../services/actions/ingredient-details";
 import { ingredientPropType } from "../../../../utils/prop-types";
 
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
+
 // Компонент для отображения ингредиента
 export default function IngredientItem({ data }) {
   const dispatch = useDispatch();
@@ -20,9 +22,15 @@ export default function IngredientItem({ data }) {
   );
 
   // Обработчик клика для выбора ингредиента
+  //const handleClick = useCallback(() => {
+  //  dispatch(openSelectedIngredient(data));
+  // }, [dispatch, data]);
+  const navigate = useNavigate();
+  const location = useLocation();
   const handleClick = useCallback(() => {
-    dispatch(openSelectedIngredient(data));
-  }, [dispatch, data]);
+    const state = { background: location };
+    navigate(`/ingredients/${data._id}`, { state });
+  }, [navigate, location, data]);
 
   // Обработчик нажатия клавиши Enter для выбора ингредиента
   const handleKeyPress = useCallback(
