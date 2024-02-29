@@ -26,6 +26,8 @@ import { fetchCheckAccess } from "../../services/actions/auth";
 import { Auth, UnAuth } from "../protected-route/protected-route";
 import FeedPage from "../../pages/feed/feed";
 import FeedDetails from "../feed-details/feed-details";
+import FeedUser from "../feed-user/feed-user";
+import ProfileForm from "../profile-form/profile-form";
 
 import { getIngredients } from "../../services/actions/ingredients";
 
@@ -102,7 +104,11 @@ export default function App() {
             <Route
               path="/profile"
               element={<Auth component={<ProfilePage />} />}
-            />
+            >
+              <Route index element={<ProfileForm />} />
+              <Route path="orders" element={<FeedUser />} />
+            </Route>
+
             <Route path="/ingredients/:id" element={<IngredientDetails />} />
             <Route path="/feed" element={<FeedPage />} />
             <Route path="/feed/:number" element={<FeedDetails />} />
@@ -120,6 +126,14 @@ export default function App() {
               />
               <Route
                 path="/feed/:number"
+                element={
+                  <Modal onClose={handleModalClose}>
+                    <FeedDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/profile/orders/:feedNumber"
                 element={
                   <Modal onClose={handleModalClose}>
                     <FeedDetails />

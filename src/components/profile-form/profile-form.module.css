@@ -1,0 +1,11 @@
+.buttonBlock {
+  display: flex;
+  align-self: flex-end;
+}
+
+.formContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 209px;
+}
