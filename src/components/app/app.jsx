@@ -25,6 +25,7 @@ import ProfilePage from "../../pages/profile/profile";
 import { fetchCheckAccess } from "../../services/actions/auth";
 import { Auth, UnAuth } from "../protected-route/protected-route";
 import FeedPage from "../../pages/feed/feed";
+import FeedDetails from "../feed-details/feed-details";
 
 import { getIngredients } from "../../services/actions/ingredients";
 
@@ -104,6 +105,8 @@ export default function App() {
             />
             <Route path="/ingredients/:id" element={<IngredientDetails />} />
             <Route path="/feed" element={<FeedPage />} />
+            <Route path="/feed/:number" element={<FeedDetails />} />
+            <Route path="/feed/test" element={<FeedDetails />} />
           </Routes>
           {background && (
             <Routes>
@@ -112,6 +115,14 @@ export default function App() {
                 element={
                   <Modal title="Детали ингредиента" onClose={handleModalClose}>
                     <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="/feed/:number"
+                element={
+                  <Modal onClose={handleModalClose}>
+                    <FeedDetails />
                   </Modal>
                 }
               />

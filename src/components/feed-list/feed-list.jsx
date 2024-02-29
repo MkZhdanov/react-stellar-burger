@@ -1,5 +1,6 @@
 import styles from "./feed-list.module.css";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import FeedItemPrice from "../feed-item-price/feed-item-price";
+import FeedIcon from "../feed-icon/feed-icon";
 
 export default function FeedList() {
   return (
@@ -20,19 +21,10 @@ export default function FeedList() {
           <div className={styles.line}>
             <ul className={styles.itemList}>
               <li style={{ marginRight: "-20px" }}>
-                <div className={styles.ingredientContainer}>
-                  <img
-                    className={`${styles.image}`}
-                    src={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-                    alt={"Соус Spicy-X"}
-                  />
-                </div>
+                <FeedIcon />
               </li>
             </ul>
-            <p className={`${styles.price} text text_type_digits-default`}>
-              <span>32200</span>
-              <CurrencyIcon type="primary" />
-            </p>
+            <FeedItemPrice />
           </div>
         </li>
         <li className={`${styles.itemContainer} p-6`}>
@@ -50,19 +42,10 @@ export default function FeedList() {
           <div className={styles.line}>
             <ul className={styles.itemList}>
               <li style={{ marginRight: "-20px" }}>
-                <div className={styles.ingredientContainer}>
-                  <img
-                    className={`${styles.image}`}
-                    src={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-                    alt={"Соус Spicy-X"}
-                  />
-                </div>
+                <FeedIcon />
               </li>
             </ul>
-            <p className={`${styles.price} text text_type_digits-default`}>
-              <span>32200</span>
-              <CurrencyIcon type="primary" />
-            </p>
+            <FeedItemPrice />
           </div>
         </li>
         <li className={`${styles.itemContainer} p-6`}>
@@ -80,19 +63,10 @@ export default function FeedList() {
           <div className={styles.line}>
             <ul className={styles.itemList}>
               <li style={{ marginRight: "-20px" }}>
-                <div className={styles.ingredientContainer}>
-                  <img
-                    className={`${styles.image}`}
-                    src={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-                    alt={"Соус Spicy-X"}
-                  />
-                </div>
+                <FeedIcon />
               </li>
             </ul>
-            <p className={`${styles.price} text text_type_digits-default`}>
-              <span>32200</span>
-              <CurrencyIcon type="primary" />
-            </p>
+            <FeedItemPrice />
           </div>
         </li>
         <li className={`${styles.itemContainer} p-6`}>
@@ -110,19 +84,10 @@ export default function FeedList() {
           <div className={styles.line}>
             <ul className={styles.itemList}>
               <li style={{ marginRight: "-20px" }}>
-                <div className={styles.ingredientContainer}>
-                  <img
-                    className={`${styles.image}`}
-                    src={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-                    alt={"Соус Spicy-X"}
-                  />
-                </div>
+                <FeedIcon />
               </li>
             </ul>
-            <p className={`${styles.price} text text_type_digits-default`}>
-              <span>32200</span>
-              <CurrencyIcon type="primary" />
-            </p>
+            <FeedItemPrice />
           </div>
         </li>
         <li className={`${styles.itemContainer} p-6`}>
@@ -140,19 +105,10 @@ export default function FeedList() {
           <div className={styles.line}>
             <ul className={styles.itemList}>
               <li style={{ marginRight: "-20px" }}>
-                <div className={styles.ingredientContainer}>
-                  <img
-                    className={`${styles.image}`}
-                    src={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-                    alt={"Соус Spicy-X"}
-                  />
-                </div>
+                <FeedIcon />
               </li>
             </ul>
-            <p className={`${styles.price} text text_type_digits-default`}>
-              <span>32200</span>
-              <CurrencyIcon type="primary" />
-            </p>
+            <FeedItemPrice />
           </div>
         </li>
         <li className={`${styles.itemContainer} p-6`}>
@@ -170,19 +126,10 @@ export default function FeedList() {
           <div className={styles.line}>
             <ul className={styles.itemList}>
               <li style={{ marginRight: "-20px" }}>
-                <div className={styles.ingredientContainer}>
-                  <img
-                    className={`${styles.image}`}
-                    src={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-                    alt={"Соус Spicy-X"}
-                  />
-                </div>
+                <FeedIcon />
               </li>
             </ul>
-            <p className={`${styles.price} text text_type_digits-default`}>
-              <span>32200</span>
-              <CurrencyIcon type="primary" />
-            </p>
+            <FeedItemPrice />
           </div>
         </li>
         <li className={`${styles.itemContainer} p-6`}>
@@ -200,19 +147,10 @@ export default function FeedList() {
           <div className={styles.line}>
             <ul className={styles.itemList}>
               <li style={{ marginRight: "-20px" }}>
-                <div className={styles.ingredientContainer}>
-                  <img
-                    className={`${styles.image}`}
-                    src={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-                    alt={"Соус Spicy-X"}
-                  />
-                </div>
+                <FeedIcon />
               </li>
             </ul>
-            <p className={`${styles.price} text text_type_digits-default`}>
-              <span>32200</span>
-              <CurrencyIcon type="primary" />
-            </p>
+            <FeedItemPrice />
           </div>
         </li>
       </ul>
