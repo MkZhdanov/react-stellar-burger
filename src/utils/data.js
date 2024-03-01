@@ -12,6 +12,8 @@ export const generateKey = () => uuidv4();
 
 // базовый url  и эндпойнты
 export const BASE_URL = "https://norma.nomoreparties.space/api/";
+export const ALL_ORDERS_URL = "wss:/norma.nomoreparties.space/orders/all";
+export const USER_ORDERS_URL = "wss://norma.nomoreparties.space/orders";
 export const loginUrl = `${BASE_URL}auth/login`;
 export const registerUrl = `${BASE_URL}auth/register`;
 export const logoutUrl = `${BASE_URL}auth/logout`;

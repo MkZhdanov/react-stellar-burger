@@ -41,3 +41,6 @@ export const postFetchBurgerRequest = (ingredients) =>
       ingredients,
     }),
   });
+
+//GET запрос для получения информации о заказе по номеру
+export const getFetchOrderInfo = (number) => request(`orders/${number}`);
