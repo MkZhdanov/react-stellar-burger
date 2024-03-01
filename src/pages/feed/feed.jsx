@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./feed.module.css";
 import FeedList from "../../components/feed-list/feed-list";
 import FeedSummary from "../../components/feed-summary/feed-summary";
+import RenderContent from "../../components/render-content/render-content";
 import {
   wsOrdersConnectionStart,
   wsOrdersConnectionClosed,
@@ -11,9 +12,7 @@ import {
 
 export default function FeedPage() {
   const dispatch = useDispatch();
-  const { isLoading, hasConnectionFailed, orders } = useSelector(
-    (state) => state.ordersData
-  );
+  const { isLoading, orders } = useSelector((state) => state.ordersData);
 
   // Запуск WebSocket соединения при монтировании компонента
   useEffect(() => {
@@ -26,11 +25,13 @@ export default function FeedPage() {
 
   return (
     <div className={`${styles.container} pt-10 pb-10`}>
-      <h2 className={"mb-5 text text_type_main-large"}>Лента заказов</h2>
-      <div className={styles.information}>
-        <FeedList data={orders} title="Лента заказов" />
-        <FeedSummary />
-      </div>
+      <RenderContent isLoading={isLoading}>
+        <h2 className={"mb-5 text text_type_main-large"}>Лента заказов</h2>
+        <div className={styles.information}>
+          <FeedList data={orders} title="Лента заказов" />
+          <FeedSummary />
+        </div>
+      </RenderContent>
     </div>
   );
 }

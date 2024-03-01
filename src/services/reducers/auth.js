@@ -93,8 +93,7 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    // регистрация
-    case REGISTER_SET_VALUE:
+    case REGISTER_SET_VALUE: // регистрация
       return {
         ...state,
         registerForm: {
@@ -125,8 +124,7 @@ export const authReducer = (state = initialState, action) => {
         registerSubmit: false,
         registerFailed: true,
       };
-    // логин
-    case LOGIN_SET_VALUE:
+    case LOGIN_SET_VALUE: // логин
       return {
         ...state,
         loginForm: {
@@ -230,12 +228,14 @@ export const authReducer = (state = initialState, action) => {
     case GET_ACCESS_SUCCESS:
       return {
         ...state,
+        loaded: false,
         user: action.payload,
         userAuth: true,
       };
     case GET_ACCESS_FAILED:
       return {
         ...state,
+        loaded: false,
         userAuth: false,
       };
     case UPDATE_INFO_SUBMIT:

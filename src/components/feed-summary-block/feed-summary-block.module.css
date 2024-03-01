@@ -1,0 +1,13 @@
+.container {
+  flex: 1;
+}
+
+.list {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  display: grid;
+  justify-content: space-between;
+  row-gap: 8px;
+  grid-template-columns: repeat(2, 50%);
+}

@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 
 import styles from "./feed-list.module.css";
 import FeedItem from "../feed-item/feed-item";
-import FeedItemPrice from "../feed-item-price/feed-item-price";
-import FeedIcon from "../feed-icon/feed-icon";
 import { orderPropType } from "../../utils/prop-types";
 
 export default function FeedList({ data }) {

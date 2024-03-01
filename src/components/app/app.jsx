@@ -9,8 +9,6 @@ import {
 } from "react-router-dom";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
@@ -28,6 +26,7 @@ import FeedPage from "../../pages/feed/feed";
 import FeedDetails from "../feed-details/feed-details";
 import FeedUser from "../feed-user/feed-user";
 import ProfileForm from "../profile-form/profile-form";
+import RenderContent from "../render-content/render-content";
 
 import { getIngredients } from "../../services/actions/ingredients";
 
@@ -85,6 +84,10 @@ export default function App() {
         <div className={`${styles.container} pr-5 pl-5`}>
           <Routes location={background || location}>
             <Route path="/" element={<Constructor />} />
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/feed/:number" element={<FeedDetails />} />
+            <Route path="/ingredients/:id" element={<IngredientDetails />} />
+            <Route path="/profile/orders/:number" element={<FeedDetails />} />
             <Route
               path="/login"
               element={<UnAuth component={<LoginPage />} />}
@@ -108,11 +111,6 @@ export default function App() {
               <Route index element={<ProfileForm />} />
               <Route path="orders" element={<FeedUser />} />
             </Route>
-
-            <Route path="/ingredients/:id" element={<IngredientDetails />} />
-            <Route path="/feed" element={<FeedPage />} />
-            <Route path="/feed/:number" element={<FeedDetails />} />
-            <Route path="/feed/test" element={<FeedDetails />} />
           </Routes>
           {background && (
             <Routes>

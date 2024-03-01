@@ -15,38 +15,3 @@
   list-style: none;
   overflow-y: auto;
 }
-
-.itemContainer {
-  background: var(--background);
-  border-radius: var(--common-border-radius-s);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  transition: var(--common-transition);
-}
-
-.itemContainer:hover {
-  opacity: 0.8;
-}
-
-.itemContainer:focus {
-  opacity: 0.8;
-}
-
-.line {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.itemList {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-}
-
-.number::before {
-  content: "#";
-}

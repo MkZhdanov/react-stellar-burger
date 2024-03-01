@@ -1,78 +1,41 @@
 import styles from "./feed-summary.module.css";
+import { useSelector } from "react-redux";
+import React, { useMemo } from "react";
+import { ORDER_STATUSES } from "../../utils/data";
+import FeedSummaryBlock from "../feed-summary-block/feed-summary-block";
+import FeedSummaryItem from "../feed-summary-item/feed-summary-item";
 
 export default function FeedSummary() {
+  const { total, totalToday, orders } = useSelector(
+    (state) => state.ordersData
+  );
+
+  const filteredOrders = useMemo(() => {
+    // Функция для фильтрации заказов по статусу и возврата первых 10 элементов
+    const filterOrdersByStatus = (status) =>
+      orders.filter((order) => order.status === status).slice(0, 10);
+
+    // Возвращаем объект с отфильтрованными заказами для "Готовы" и "В работе"
+    return {
+      completedOrders: filterOrdersByStatus(ORDER_STATUSES.done),
+      pendingOrders: filterOrdersByStatus(ORDER_STATUSES.pending),
+    };
+  }, [orders]);
+
   return (
     <div className={styles.container}>
       <div className={styles.line}>
-        <div className={`${styles.block} mb-15`}>
-          <h2 className="text text_type_main-medium mb-6">Готовы:</h2>
-          <ul className={`${styles.list} mt-6`}>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-          </ul>
-        </div>
-        <div className={`${styles.block} mb-15`}>
-          <h2 className="text text_type_main-medium mb-6">В работе:</h2>
-          <ul className={`${styles.list} mt-6`}>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-            <li className="text text_type_digits-default text_color_success">
-              35345
-            </li>
-          </ul>
-        </div>
+        <FeedSummaryBlock
+          title="Готовы:"
+          data={filteredOrders.completedOrders}
+        />
+        <FeedSummaryBlock
+          title="В работе:"
+          data={filteredOrders.pendingOrders}
+        />
       </div>
-      <div>
-        <h2 className="text text_type_main-medium">Выполнено за все время:</h2>
-        <p className={`${styles.text_shadow} text text_type_digits-large`}>
-          12
-        </p>
-      </div>
-      <div>
-        <h2 className="text text_type_main-medium">Выполнено за сегодня:</h2>
-        <p className={`${styles.text_shadow} text text_type_digits-large`}>1</p>
-      </div>
+      <FeedSummaryItem title="Выполнено за все время:" value={total} />
+      <FeedSummaryItem title="Выполнено за сегодня:" value={totalToday} />
     </div>
   );
 }
