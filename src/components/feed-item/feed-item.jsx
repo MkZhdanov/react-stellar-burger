@@ -28,14 +28,14 @@ export default function FeedItem({ data }) {
 
     // Отображаем первые пять ингредиентов с использованием map
     const renderedFirstFive = firstFive.map((id, index) => (
-      <li key={index} style={{ marginRight: "-20px" }}>
+      <li key={index} className={styles.lineIcon}>
         <FeedIcon zIndex={ingredients.length - index} id={id} hover={false} />
       </li>
     ));
 
     // Добавляем оставшиеся ингредиенты, если они существуют
     const renderedRemaining = !isEmpty(remaining) && (
-      <li>
+      <li key={remaining[0]}>
         <FeedIcon
           col={remaining.length}
           id={remaining[0]}
@@ -58,7 +58,7 @@ export default function FeedItem({ data }) {
           className="text text_type_main-default text_color_inactive"
         />
       </div>
-      <h2 className="text text_type_main-medium">{name}</h2>
+      <h3 className="text text_type_main-medium">{name}</h3>
       <div className={styles.line}>
         <ul className={styles.list}>{renderIngredients()}</ul>
         <FeedItemPrice data={ingredients} />

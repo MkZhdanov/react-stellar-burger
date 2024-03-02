@@ -26,7 +26,6 @@ import FeedPage from "../../pages/feed/feed";
 import FeedDetails from "../feed-details/feed-details";
 import FeedUser from "../feed-user/feed-user";
 import ProfileForm from "../profile-form/profile-form";
-import RenderContent from "../render-content/render-content";
 
 import { getIngredients } from "../../services/actions/ingredients";
 
@@ -85,9 +84,12 @@ export default function App() {
           <Routes location={background || location}>
             <Route path="/" element={<Constructor />} />
             <Route path="/feed" element={<FeedPage />} />
-            <Route path="/feed/:number" element={<FeedDetails />} />
+            <Route path="/feed/:feedNumber" element={<FeedDetails />} />
             <Route path="/ingredients/:id" element={<IngredientDetails />} />
-            <Route path="/profile/orders/:number" element={<FeedDetails />} />
+            <Route
+              path="/profile/orders/:feedNumber"
+              element={<FeedDetails />}
+            />
             <Route
               path="/login"
               element={<UnAuth component={<LoginPage />} />}
@@ -123,7 +125,7 @@ export default function App() {
                 }
               />
               <Route
-                path="/feed/:number"
+                path="/feed/:feedNumber"
                 element={
                   <Modal onClose={handleModalClose}>
                     <FeedDetails />
