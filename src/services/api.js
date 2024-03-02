@@ -1,4 +1,5 @@
 import { BASE_URL } from "../utils/data";
+import { getCookie } from "../utils/cookie";
 
 // создаем функцию проверки ответа на `ok`
 const checkResponse = (res) => {
@@ -36,8 +37,12 @@ export const postFetchBurgerRequest = (ingredients) =>
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify({
       ingredients,
     }),
   });
+
+//GET запрос для получения информации о заказе по номеру
+export const getFetchOrderInfo = (number) => request(`orders/${number}`);

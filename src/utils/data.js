@@ -10,8 +10,18 @@ export const component_tabs = {
 // Генерация уникального ключа
 export const generateKey = () => uuidv4();
 
+// Статусы заказов
+export const ORDER_STATUSES = {
+  created: "created",
+  pending: "pending",
+  done: "done",
+  canselled: "canselled",
+};
+
 // базовый url  и эндпойнты
 export const BASE_URL = "https://norma.nomoreparties.space/api/";
+export const ALL_ORDERS_URL = "wss:/norma.nomoreparties.space/orders/all";
+export const USER_ORDERS_URL = "wss://norma.nomoreparties.space/orders";
 export const loginUrl = `${BASE_URL}auth/login`;
 export const registerUrl = `${BASE_URL}auth/register`;
 export const logoutUrl = `${BASE_URL}auth/logout`;

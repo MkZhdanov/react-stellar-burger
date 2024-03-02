@@ -1,4 +1,5 @@
 import { postFetchBurgerRequest } from "../api";
+import { getCookie } from "../../utils/cookie";
 
 // ======== Action Types ========
 export const CREATE_ORDER_REQUEST = "CREATE_ORDER_REQUEST";

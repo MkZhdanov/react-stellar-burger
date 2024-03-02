@@ -20,7 +20,7 @@ export default function AppHeader() {
     currentLocation.pathname === url ? "primary" : "secondary";
 
   return (
-    <header className={`${styles.header} mt-10 mr-10 ml-10`}>
+    <header className={`${styles.header} `}>
       <nav className={styles.nav}>
         <ul className={styles.list}>
           <li>
@@ -36,12 +36,12 @@ export default function AppHeader() {
           </li>
           <li>
             <NavLink
-              to={"/stub"}
+              to={"/feed"}
               className={({ isActive }) =>
                 link + (isActive ? activeLink : inactiveLink)
               }
             >
-              <ListIcon type={getIconType("/stub")} />
+              <ListIcon type={getIconType("/feed")} />
               <span className="text text_type_main-default">Лента заказов</span>
             </NavLink>
           </li>

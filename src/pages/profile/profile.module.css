@@ -1,14 +1,14 @@
 .container {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: row;
-  margin-top: 120px;
+  align-self: center;
+
   gap: 60px;
+  width: 100%;
 }
 
 .navContainer {
   display: flex;
+  align-self: center;
   flex-direction: column;
   max-width: 320px;
 }
@@ -20,13 +20,6 @@
   margin-top: 50px;
 }
 
-.formContainer {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-right: 209px;
-}
-
 .link {
   display: flex;
   text-decoration: none;
@@ -36,9 +29,4 @@
 
 .text {
   opacity: 40%;
-}
-
-.buttonBlock {
-  display: flex;
-  align-self: flex-end;
 }

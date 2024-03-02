@@ -14,7 +14,7 @@ const initialState = {
 };
 
 // Редюсер для заказов
-export const orderReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     // Установка состояния загрузки и сброс предыдущего заказа и ошибки

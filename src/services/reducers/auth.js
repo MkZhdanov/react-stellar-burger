@@ -24,6 +24,11 @@ import {
   LOGOUT_SUBMIT,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
+  WS_USER_CLOSED,
+  WS_USER_ERROR,
+  WS_USER_GET_ORDERS,
+  WS_USER_START,
+  WS_USER_SUCCESS,
 } from "../actions/auth";
 
 const initialState = {
@@ -77,12 +82,18 @@ const initialState = {
   // изменение данных
   updateInfoSubmit: false,
   updateInfoFailed: false,
+
+  // ws
+  isLoading: false,
+  isConnection: false,
+  hasConnectionFailed: false,
+  orders: [],
+  errors: [],
 };
 
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    // регистрация
-    case REGISTER_SET_VALUE:
+    case REGISTER_SET_VALUE: // регистрация
       return {
         ...state,
         registerForm: {
@@ -113,8 +124,7 @@ export const authReducer = (state = initialState, action) => {
         registerSubmit: false,
         registerFailed: true,
       };
-    // логин
-    case LOGIN_SET_VALUE:
+    case LOGIN_SET_VALUE: // логин
       return {
         ...state,
         loginForm: {
@@ -218,12 +228,14 @@ export const authReducer = (state = initialState, action) => {
     case GET_ACCESS_SUCCESS:
       return {
         ...state,
+        loaded: false,
         user: action.payload,
         userAuth: true,
       };
     case GET_ACCESS_FAILED:
       return {
         ...state,
+        loaded: false,
         userAuth: false,
       };
     case UPDATE_INFO_SUBMIT:
@@ -258,6 +270,40 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         logoutFailed: true,
+      };
+    case WS_USER_START:
+      return {
+        ...state,
+        isLoading: true,
+        isConnection: false,
+        hasConnectionFailed: false,
+        orders: [],
+      };
+    case WS_USER_SUCCESS:
+      return {
+        ...state,
+        isConnection: true,
+      };
+    case WS_USER_ERROR:
+      return {
+        ...state,
+        hasConnectionFailed: true,
+        errors: [...state.errors, action.payload],
+      };
+    case WS_USER_GET_ORDERS: {
+      const { orders } = action.payload;
+      return {
+        ...state,
+        isLoading: false,
+        hasConnectionFailed: false,
+        orders: [...orders],
+      };
+    }
+    case WS_USER_CLOSED:
+      return {
+        ...state,
+        isLoading: false,
+        isConnection: false,
       };
     default: {
       return state;

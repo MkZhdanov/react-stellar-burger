@@ -1,0 +1,8 @@
+.container {
+  width: 100%;
+}
+
+.information {
+  display: flex;
+  gap: 32px;
+}

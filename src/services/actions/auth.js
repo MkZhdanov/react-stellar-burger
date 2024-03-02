@@ -49,6 +49,12 @@ export const UPDATE_INFO_FAILED = "UPDATE_INFO_FAILED";
 export const LOGOUT_SUBMIT = "LOGOUT_SUBMIT";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
+// Действия WebSocket
+export const WS_USER_START = "WS_USER_START";
+export const WS_USER_SUCCESS = "WS_USER_SUCCESS";
+export const WS_USER_ERROR = "WS_USER_ERROR";
+export const WS_USER_CLOSED = "WS_USER_CLOSED";
+export const WS_USER_GET_ORDERS = "WS_GET_USER_ORDERS";
 
 // ======== Action Creators ========
 // Действия связанные с процессом регистрации
@@ -440,3 +446,8 @@ export const fetchLogout = (refreshToken) => {
       });
   };
 };
+
+// Действия связанные с WebSocket соединением для получения заказов пользователя
+export const wsUserOrdersConnectionStart = () => ({ type: WS_USER_START });
+export const wsUserOrdersConnectionClosed = () => ({ type: WS_USER_CLOSED });
+export const getUserOrders = () => ({ type: WS_USER_GET_ORDERS });

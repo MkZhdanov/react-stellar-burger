@@ -5,8 +5,8 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../../utils/cookie";
 import { fetchLogout, fetchUpdateUserInfo } from "../../services/actions/auth";
@@ -16,46 +16,24 @@ export default function ProfilePage() {
   const activeLink = "text_color_primary";
   const inactiveLink = "text_color_inactive ";
 
-  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
-  const [value, setValue] = React.useState(user);
-
-  const [input, setInput] = React.useState({
-    name: false,
-    email: false,
-    password: "",
-  });
+  const [currentPage, setCurrentPage] = useState("home");
+  const changePage = (page) => {
+    setCurrentPage(page);
+  };
 
   const refreshToken = getCookie("refreshToken");
-
-  const [isChange, setIsChange] = React.useState(false);
 
   const logout = () => {
     dispatch(fetchLogout(refreshToken));
   };
-
-  const onChange = (e) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
-    setIsChange(true);
-  };
-
-  function onReset() {
-    setValue({ name: user.name, email: user.email, password: "" });
-    setIsChange(false);
-  }
-
-  function profileFormSubmit(e) {
-    e.preventDefault();
-    dispatch(fetchUpdateUserInfo(value));
-    setIsChange(false);
-  }
 
   return (
     <div className={styles.container}>
       <div className={styles.navContainer}>
         <nav className={styles.navigation}>
           <NavLink
+            onClick={() => changePage("home")}
             to="/profile"
             end
             className={({ isActive }) =>
@@ -65,6 +43,7 @@ export default function ProfilePage() {
             Профиль
           </NavLink>
           <NavLink
+            onClick={() => changePage("orders")}
             to="/profile/orders"
             className={({ isActive }) =>
               link + (isActive ? activeLink : inactiveLink)
@@ -82,49 +61,13 @@ export default function ProfilePage() {
         <p
           className={`${styles.text} text text_type_main-default text_color_inactive`}
         >
-          В этом разделе вы можете изменить свои персональные данные
+          {currentPage === "home" &&
+            "В этом разделе вы можете изменить свои персональные данные"}
+          {currentPage === "orders" &&
+            "В этом разделе вы можете просмотреть свою историю заказов"}
         </p>
       </div>
-      <form onSubmit={profileFormSubmit} className={styles.formContainer}>
-        <Input
-          onChange={onChange}
-          value={value?.name || ""}
-          placeholder={"Имя"}
-          name={"name"}
-          extraClass="mb-6"
-        />
-        <EmailInput
-          onChange={onChange}
-          value={value?.email || ""}
-          name={"email"}
-          placeholder={"Логин"}
-          isIcon={true}
-          extraClass="mb-6"
-        />
-        <PasswordInput
-          onChange={onChange}
-          value={value?.password || ""}
-          name={"password"}
-          placeholder={"Пароль"}
-          icon="EditIcon"
-          extraClass="mb-6"
-        />
-        {isChange && (
-          <div className={` ${styles.buttonBlock}`}>
-            <Button
-              size="medium"
-              htmlType="button"
-              type="secondary"
-              onClick={onReset}
-            >
-              Отмена
-            </Button>
-            <Button htmlType="submit" size="medium">
-              Сохранить
-            </Button>
-          </div>
-        )}
-      </form>
+      <Outlet />
     </div>
   );
 }
