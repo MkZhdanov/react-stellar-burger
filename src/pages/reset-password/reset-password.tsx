@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, FormEvent, ChangeEvent } from "react";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,18 +12,18 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./reset-password.module.css";
 
-export default function ResetPasswordPage() {
+const ResetPasswordPage: FC = () => {
   const { resetPasswordForm, forgotPasswordSubmit } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setPasswordValue(e.target.name, e.target.value));
   };
 
-  const submitResetPassword = (e) => {
+  const submitResetPassword = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(fetchResetPassword(resetPasswordForm));
   };
@@ -78,4 +78,6 @@ export default function ResetPasswordPage() {
       </div>
     </div>
   );
-}
+};
+
+export default ResetPasswordPage;

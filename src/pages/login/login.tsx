@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, FormEvent, ChangeEvent } from "react";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,18 +9,18 @@ import {
 import styles from "./login.module.css";
 import { fetchLogin, setLoginValue } from "../../services/actions/auth";
 
-export default function LoginPage() {
+const LoginPage: FC = () => {
   const { loginForm, loginSubmit, userAuth } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setLoginValue(e.target.name, e.target.value));
   };
 
-  const submitForm = (e) => {
+  const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(fetchLogin(loginForm));
   };
@@ -75,4 +75,6 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginPage;

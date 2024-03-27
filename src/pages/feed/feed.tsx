@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./feed.module.css";
@@ -10,7 +10,7 @@ import {
   wsOrdersConnectionClosed,
 } from "../../services/actions/orders";
 
-export default function FeedPage() {
+const FeedPage: FC = () => {
   const dispatch = useDispatch();
   const { isLoading, orders } = useSelector((state) => state.ordersData);
 
@@ -28,10 +28,12 @@ export default function FeedPage() {
       <RenderContent isLoading={isLoading}>
         <h2 className={"mb-5 text text_type_main-large"}>Лента заказов</h2>
         <div className={styles.information}>
-          <FeedList data={orders} title="Лента заказов" />
+          <FeedList data={orders} />
           <FeedSummary />
         </div>
       </RenderContent>
     </div>
   );
-}
+};
+
+export default FeedPage;

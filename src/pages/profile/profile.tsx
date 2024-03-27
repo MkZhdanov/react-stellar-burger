@@ -5,20 +5,20 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../../utils/cookie";
 import { fetchLogout, fetchUpdateUserInfo } from "../../services/actions/auth";
 
-export default function ProfilePage() {
+const ProfilePage: FC = () => {
   const link = `${styles.link} text text_type_main-medium `;
   const activeLink = "text_color_primary";
   const inactiveLink = "text_color_inactive ";
 
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState("home");
-  const changePage = (page) => {
+  const changePage = (page: string) => {
     setCurrentPage(page);
   };
 
@@ -53,6 +53,7 @@ export default function ProfilePage() {
           </NavLink>
           <NavLink
             onClick={logout}
+            to="/login"
             className={`${styles.link} text text_type_main-medium text_color_inactive`}
           >
             Выход
@@ -70,4 +71,6 @@ export default function ProfilePage() {
       <Outlet />
     </div>
   );
-}
+};
+
+export default ProfilePage;

@@ -1,5 +1,5 @@
 import { Link, useNavigate, Navigate } from "react-router-dom";
-import React from "react";
+import React, { FC, FormEvent, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./register.module.css";
 import {
@@ -10,16 +10,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { fetchRegister, setRegisterValue } from "../../services/actions/auth";
 
-export default function RegisterPage() {
+const RegisterPage: FC = () => {
   const { registerForm } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function onChange(e) {
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
     dispatch(setRegisterValue(e.target.name, e.target.value));
   }
 
-  const submitRegisterForm = (e) => {
+  const submitRegisterForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(fetchRegister(registerForm, () => navigate("/login")));
   };
@@ -76,4 +76,6 @@ export default function RegisterPage() {
       </div>
     </div>
   );
-}
+};
+
+export default RegisterPage;

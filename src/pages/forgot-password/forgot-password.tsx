@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, FormEvent, ChangeEvent } from "react";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchForgotPassword, setFormValue } from "../../services/actions/auth";
@@ -8,7 +8,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export default function ForgotPasswordPage() {
+const ForgotPasswordPage: FC = () => {
   const { forgotPasswordForm } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,11 +17,11 @@ export default function ForgotPasswordPage() {
     navigate("/reset-password", { replace: false });
   }
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setFormValue(e.target.name, e.target.value));
   };
 
-  function submitForgotPassword(e) {
+  function submitForgotPassword(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(fetchForgotPassword(forgotPasswordForm, goToResetPage));
   }
@@ -62,4 +62,6 @@ export default function ForgotPasswordPage() {
       </div>
     </div>
   );
-}
+};
+
+export default ForgotPasswordPage;
