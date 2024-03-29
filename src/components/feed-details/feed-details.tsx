@@ -1,6 +1,6 @@
 import styles from "./feed-details.module.css";
 import React, { useEffect, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { useParams } from "react-router-dom";
 import { getInformationOrder } from "../../services/actions/order";
 import isEmpty from "../../utils/isEmpty";

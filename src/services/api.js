@@ -2,7 +2,7 @@ import { BASE_URL } from "../utils/data";
 import { getCookie } from "../utils/cookie";
 
 // создаем функцию проверки ответа на `ok`
-const checkResponse = (res) => {
+export const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }

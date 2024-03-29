@@ -1,5 +1,5 @@
 import React, { useMemo, FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import FeedIcon from "../feed-icon/feed-icon";
 import styles from "./feed-ingredient.module.css";

@@ -1,6 +1,5 @@
 import { setCookie, getCookie, deleteCookie } from "../../utils/cookie";
 import {
-  baseUrl,
   resetPasswordUrl,
   forgotPasswordUrl,
   checkAccessUrl,
@@ -8,57 +7,220 @@ import {
   logoutUrl,
   loginUrl,
   registerUrl,
-  orderUrl,
 } from "../../utils/data";
+import { checkResponse } from "../api";
+import {
+  REGISTER_SET_VALUE,
+  REGISTER_SUBMIT,
+  REGISTER_SUCCESS,
+  REGISTER_FAILED,
+  LOGIN_SET_VALUE,
+  LOGIN_SUBMIT,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  FORGOT_PASSWORD_SET_VALUE,
+  FORGOT_PASSWORD_SUBMIT,
+  FORGOT_PASSWORD_SUBMIT_SUCCESS,
+  FORGOT_PASSWORD_SUBMIT_FAILED,
+  RESET_PASSWORD_SET_VALUE,
+  RESET_PASSWORD_SUBMIT,
+  RESET_PASSWORD_SUBMIT_SUCCESS,
+  RESET_PASSWORD_SUBMIT_FAILED,
+  GET_ACCESS_SUCCESS,
+  GET_ACCESS_FAILED,
+  GET_ACCESS_LOADED,
+  UPDATE_INFO_SUBMIT,
+  UPDATE_INFO_SUCCESS,
+  UPDATE_INFO_FAILED,
+  LOGOUT_SUBMIT,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
+  WS_USER_START,
+  WS_USER_SUCCESS,
+  WS_USER_ERROR,
+  WS_USER_CLOSED,
+  WS_USER_GET_ORDERS,
+} from "../constants";
+import {
+  IRegister,
+  IUser,
+  ILogin,
+  IResetPassword,
+  IChangeUserInfo,
+} from "../../utils/types/types";
+import { IOrder } from "../../utils/types/order";
 
-const checkResponse = (res) =>
-  res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+export interface ISetRegisterValue {
+  readonly type: typeof REGISTER_SET_VALUE;
+  readonly field: string;
+  readonly value: string;
+}
 
-// ======== Action Types ========
-// Регистрация
-export const REGISTER_SET_VALUE = "REGISTER_SET_VALUE";
-export const REGISTER_SUBMIT = "REGISTER_SUBMIT";
-export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-export const REGISTER_FAILED = "REGISTER_FAILED";
-// Авторизация
-export const LOGIN_SET_VALUE = "LOGIN_SET_VALUE";
-export const LOGIN_SUBMIT = "LOGIN_SUBMIT";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILED = "LOGIN_FAILED";
-//восстановление пароля
-export const FORGOT_PASSWORD_SET_VALUE = "FORGOT_PASSWORD_FORM_SET_VALUE";
-export const FORGOT_PASSWORD_SUBMIT = "FORGOT_PASSWORD_FORM_SUBMIT";
-export const FORGOT_PASSWORD_SUBMIT_SUCCESS =
-  "FORGOT_PASSWORD_FORM_SUBMIT_SUCCESS";
-export const FORGOT_PASSWORD_SUBMIT_FAILED =
-  "FORGOT_PASSWORD_FORM_SUBMIT_FAILED";
-//сброс пароля
-export const RESET_PASSWORD_SET_VALUE = "RESET_PASSWORD_SET_VALUE";
-export const RESET_PASSWORD_SUBMIT = "RESET_PASSWORD_SUBMIT";
-export const RESET_PASSWORD_SUBMIT_SUCCESS = "RESET_PASSWORD_SUBMIT_SUCCESS";
-export const RESET_PASSWORD_SUBMIT_FAILED = "RESET_PASSWORD_SUBMIT_FAILED";
-//получение данных пользователя
-export const GET_ACCESS_SUCCESS = "GET_ACCESS_SUCCESS";
-export const GET_ACCESS_FAILED = "GET_ACCESS_FAILED";
-export const GET_ACCESS_LOADED = "GET_ACCESS_LOADED";
-//изменение данных пользователя
-export const UPDATE_INFO_SUBMIT = "UPDATE_INFO_SUBMIT";
-export const UPDATE_INFO_SUCCESS = "UPDATE_INFO_SUCCESS";
-export const UPDATE_INFO_FAILED = "UPDATE_INFO_FAILED";
-// выход из акаунта
-export const LOGOUT_SUBMIT = "LOGOUT_SUBMIT";
-export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-export const LOGOUT_FAILED = "LOGOUT_FAILED";
-// Действия WebSocket
-export const WS_USER_START = "WS_USER_START";
-export const WS_USER_SUCCESS = "WS_USER_SUCCESS";
-export const WS_USER_ERROR = "WS_USER_ERROR";
-export const WS_USER_CLOSED = "WS_USER_CLOSED";
-export const WS_USER_GET_ORDERS = "WS_GET_USER_ORDERS";
+export interface IRegisterSubmit {
+  readonly type: typeof REGISTER_SUBMIT;
+}
 
-// ======== Action Creators ========
+export interface IRegisterSuccess {
+  readonly type: typeof REGISTER_SUCCESS;
+}
+
+export interface IRegisterFailed {
+  readonly type: typeof REGISTER_FAILED;
+}
+
+export interface ISetLoginValue {
+  readonly type: typeof LOGIN_SET_VALUE;
+  readonly field: string;
+  readonly value: string;
+}
+
+export interface ILoginSubmit {
+  readonly type: typeof LOGIN_SUBMIT;
+}
+
+export interface ILoginSuccess {
+  readonly type: typeof LOGIN_SUCCESS;
+  readonly payload: IUser;
+  readonly dataUser: IUser;
+}
+
+export interface ILoginFailed {
+  readonly type: typeof LOGIN_FAILED;
+}
+
+export interface IForgotPasswordSetValue {
+  readonly type: typeof FORGOT_PASSWORD_SET_VALUE;
+  readonly field: string;
+  readonly value: string;
+}
+
+export interface IForgotPasswordSubmitValue {
+  readonly type: typeof FORGOT_PASSWORD_SUBMIT;
+}
+
+export interface IForgotPasswordSuccessValue {
+  readonly type: typeof FORGOT_PASSWORD_SUBMIT_SUCCESS;
+}
+
+export interface IForgotPasswordFailedValue {
+  readonly type: typeof FORGOT_PASSWORD_SUBMIT_FAILED;
+}
+
+export interface ISetPasswordValue {
+  readonly type: typeof RESET_PASSWORD_SET_VALUE;
+  readonly field: string;
+  readonly value: string;
+}
+
+export interface IPasswordSubmitValue {
+  readonly type: typeof RESET_PASSWORD_SUBMIT;
+}
+
+export interface IPasswordSuccessValue {
+  readonly type: typeof RESET_PASSWORD_SUBMIT_SUCCESS;
+}
+
+export interface IPasswordFailedValue {
+  readonly type: typeof RESET_PASSWORD_SUBMIT_FAILED;
+}
+
+export interface IGetAccessLoaded {
+  readonly type: typeof GET_ACCESS_LOADED;
+}
+
+export interface IAccessSuccess {
+  readonly type: typeof GET_ACCESS_SUCCESS;
+  readonly payload: IUser;
+}
+
+export interface IGetAccessFailed {
+  readonly type: typeof GET_ACCESS_FAILED;
+}
+
+export interface IUpdateRequest {
+  readonly type: typeof UPDATE_INFO_SUBMIT;
+}
+
+export interface IUpdateSuccess {
+  readonly type: typeof UPDATE_INFO_SUCCESS;
+  readonly payload: IUser;
+}
+
+export interface IUpdateFailed {
+  readonly type: typeof UPDATE_INFO_FAILED;
+}
+
+export interface ILogoutRequest {
+  readonly type: typeof LOGOUT_SUBMIT;
+}
+
+export interface ILogoutSuccess {
+  readonly type: typeof LOGOUT_SUCCESS;
+  readonly payload: IUser;
+}
+
+export interface ILogoutFailed {
+  readonly type: typeof LOGOUT_FAILED;
+}
+
+export interface IWsUserOrdersConnectionStartAction {
+  readonly type: typeof WS_USER_START;
+}
+
+export interface IWsUserOrdersConnectionSuccessAction {
+  readonly type: typeof WS_USER_SUCCESS;
+}
+
+export interface IWsUserOrdersConnectionErrorAction {
+  readonly type: typeof WS_USER_ERROR;
+}
+
+export interface IWsUserOrdersConnectionClosedAction {
+  readonly type: typeof WS_USER_CLOSED;
+}
+
+export interface IGetUserOrdersAction {
+  readonly type: typeof WS_USER_GET_ORDERS;
+  readonly payload: { orders: IOrder[] };
+}
+
+export type TUserActions =
+  | IForgotPasswordSetValue
+  | IForgotPasswordSubmitValue
+  | IForgotPasswordSuccessValue
+  | IForgotPasswordFailedValue
+  | ISetPasswordValue
+  | IPasswordSubmitValue
+  | IPasswordSuccessValue
+  | IPasswordFailedValue
+  | ISetRegisterValue
+  | IRegisterSubmit
+  | IRegisterSuccess
+  | IRegisterFailed
+  | ISetLoginValue
+  | ILoginSubmit
+  | ILoginSuccess
+  | ILoginFailed
+  | IGetAccessLoaded
+  | IAccessSuccess
+  | IGetAccessFailed
+  | IUpdateRequest
+  | IUpdateSuccess
+  | IUpdateFailed
+  | ILogoutRequest
+  | ILogoutSuccess
+  | ILogoutFailed
+  | IWsUserOrdersConnectionStartAction
+  | IWsUserOrdersConnectionSuccessAction
+  | IWsUserOrdersConnectionErrorAction
+  | IWsUserOrdersConnectionClosedAction
+  | IGetUserOrdersAction;
+
 // Действия связанные с процессом регистрации
-export const setRegisterValue = (field, value) => {
+export const setRegisterValue = (
+  field: string,
+  value: string
+): ISetRegisterValue => {
   return {
     type: REGISTER_SET_VALUE,
     field,
@@ -66,25 +228,25 @@ export const setRegisterValue = (field, value) => {
   };
 };
 
-const registerSubmit = () => {
+const registerSubmit = (): IRegisterSubmit => {
   return {
     type: REGISTER_SUBMIT,
   };
 };
 
-const registerSuccess = () => {
+const registerSuccess = (): IRegisterSuccess => {
   return {
     type: REGISTER_SUCCESS,
   };
 };
 
-const registerFailed = () => {
+const registerFailed = (): IRegisterFailed => {
   return {
     type: REGISTER_FAILED,
   };
 };
 
-export const fetchRegister = (userData, callback) => {
+export const fetchRegister = (userData: IRegister, callback: () => void) => {
   return (dispatch) => {
     dispatch(registerSubmit());
     fetch(registerUrl, {
@@ -106,13 +268,13 @@ export const fetchRegister = (userData, callback) => {
       })
       .catch((error) => {
         console.log(`Ошибка при загрузке данных: ${error}`);
-        dispatch(registerFailed(error));
+        dispatch(registerFailed());
       });
   };
 };
 
 // Действия связанные с процессом авторизации
-export function setLoginValue(field, value) {
+export function setLoginValue(field: string, value: string): ISetLoginValue {
   return {
     type: LOGIN_SET_VALUE,
     field,
@@ -120,26 +282,27 @@ export function setLoginValue(field, value) {
   };
 }
 
-const loginSubmit = () => {
+const loginSubmit = (): ILoginSubmit => {
   return {
     type: LOGIN_SUBMIT,
   };
 };
-
-const loginSuccess = (res) => {
+/////////////////////////////////////////////////////////////////// dataUser: res,
+const loginSuccess = (res): ILoginSuccess => {
   return {
     type: LOGIN_SUCCESS,
     payload: res.user,
+    dataUser: res,
   };
 };
 
-const loginFailed = () => {
+const loginFailed = (): ILoginFailed => {
   return {
     type: LOGIN_FAILED,
   };
 };
 
-export const fetchLogin = (userData) => {
+export const fetchLogin = (userData: ILogin) => {
   return (dispatch) => {
     dispatch(loginSubmit());
     fetch(loginUrl, {
@@ -159,13 +322,16 @@ export const fetchLogin = (userData) => {
       })
       .catch((error) => {
         console.log(`Ошибка при загрузке данных: ${error}`);
-        dispatch(loginFailed(error));
+        dispatch(loginFailed());
       });
   };
 };
 
 // Действия связанные с процессом восстановления пароля
-export function setFormValue(field, value) {
+export function setFormValue(
+  field: string,
+  value: string
+): IForgotPasswordSetValue {
   return {
     type: FORGOT_PASSWORD_SET_VALUE,
     field,
@@ -173,25 +339,28 @@ export function setFormValue(field, value) {
   };
 }
 
-const submitForm = () => {
+const submitForm = (): IForgotPasswordSubmitValue => {
   return {
     type: FORGOT_PASSWORD_SUBMIT,
   };
 };
 
-const submitSuccessForm = () => {
+const submitSuccessForm = (): IForgotPasswordSuccessValue => {
   return {
     type: FORGOT_PASSWORD_SUBMIT_SUCCESS,
   };
 };
 
-const submitFailedForm = () => {
+const submitFailedForm = (): IForgotPasswordFailedValue => {
   return {
     type: FORGOT_PASSWORD_SUBMIT_FAILED,
   };
 };
 
-export const fetchForgotPassword = (email, callback) => {
+export const fetchForgotPassword = (
+  email: { email: string },
+  callback: () => void
+) => {
   return (dispatch) => {
     dispatch(submitForm());
     fetch(forgotPasswordUrl, {
@@ -206,18 +375,21 @@ export const fetchForgotPassword = (email, callback) => {
       .then((data) => {
         console.log(callback);
         console.log(data);
-        dispatch(submitSuccessForm(data));
+        dispatch(submitSuccessForm());
         callback();
       })
       .catch((error) => {
         console.log(`Ошибка при загрузке данных: ${error}`);
-        dispatch(submitFailedForm(error));
+        dispatch(submitFailedForm());
       });
   };
 };
 
 // Действия связанные с процессом сброса пароля
-export function setPasswordValue(field, value) {
+export function setPasswordValue(
+  field: string,
+  value: string
+): ISetPasswordValue {
   return {
     type: RESET_PASSWORD_SET_VALUE,
     field,
@@ -225,25 +397,25 @@ export function setPasswordValue(field, value) {
   };
 }
 
-const submitResetPassword = () => {
+const submitResetPassword = (): IPasswordSubmitValue => {
   return {
     type: RESET_PASSWORD_SUBMIT,
   };
 };
 
-const submitSuccessResetPassword = () => {
+const submitSuccessResetPassword = (): IPasswordSuccessValue => {
   return {
     type: RESET_PASSWORD_SUBMIT_SUCCESS,
   };
 };
 
-const submitFailedResetPassword = () => {
+const submitFailedResetPassword = (): IPasswordFailedValue => {
   return {
     type: RESET_PASSWORD_SUBMIT_FAILED,
   };
 };
 
-export const fetchResetPassword = (password) => {
+export const fetchResetPassword = (password: IResetPassword) => {
   return (dispatch) => {
     dispatch(submitResetPassword());
     fetch(resetPasswordUrl, {
@@ -257,36 +429,37 @@ export const fetchResetPassword = (password) => {
       .then(checkResponse)
       .then((data) => {
         console.log(data);
-        dispatch(submitSuccessResetPassword(data));
+        dispatch(submitSuccessResetPassword());
       })
       .catch((error) => {
         console.log(`Ошибка при загрузке данных: ${error}`);
-        dispatch(submitFailedResetPassword(error));
+        dispatch(submitFailedResetPassword());
       });
   };
 };
 
 // Действия связанные с процессом получения данных пользователя с сервера
-const accessLoaded = () => {
+const accessLoaded = (): IGetAccessLoaded => {
   return {
     type: GET_ACCESS_LOADED,
   };
 };
 
-const accessSuccess = (res) => {
+const accessSuccess = (res): IAccessSuccess => {
+  ///////////////// (user:IUser)  payload: user,
   return {
     type: GET_ACCESS_SUCCESS,
     payload: res.user,
   };
 };
 
-const accessFailed = () => {
+const accessFailed = (): IGetAccessFailed => {
   return {
     type: GET_ACCESS_FAILED,
   };
 };
 
-export const fetchCheckAccess = (accessToken) => {
+export const fetchCheckAccess = (accessToken: string | undefined) => {
   return (dispatch) => {
     fetch(checkAccessUrl, {
       method: "GET",
@@ -313,7 +486,7 @@ export const fetchCheckAccess = (accessToken) => {
 };
 
 //обновление токена
-export const refreshToken = (refreshToken) => {
+export const refreshToken = (refreshToken: string | undefined) => {
   return (dispatch) => {
     fetch(tokenUrl, {
       method: "POST",
@@ -332,32 +505,33 @@ export const refreshToken = (refreshToken) => {
       })
       .catch((error) => {
         console.log(`Ошибка при загрузке данных: ${error}`);
-        dispatch(accessFailed(error));
+        dispatch(accessFailed());
       });
   };
 };
 
 // Действия связанные с процессом изменения данных пользователя
-const updateRequest = () => {
+const updateRequest = (): IUpdateRequest => {
   return {
     type: UPDATE_INFO_SUBMIT,
   };
 };
 
-const updateSuccess = (res) => {
+const updateSuccess = (res): IUpdateSuccess => {
+  ///////////////////////////////////////////////////////////////////////
   return {
     type: UPDATE_INFO_SUCCESS,
     payload: res.user,
   };
 };
 
-const updateFailed = () => {
+const updateFailed = (): IUpdateFailed => {
   return {
     type: UPDATE_INFO_FAILED,
   };
 };
 
-export const fetchUpdateUserInfo = (userData) => {
+export const fetchUpdateUserInfo = (userData: IChangeUserInfo) => {
   return (dispatch) => {
     dispatch(updateRequest());
     fetch(checkAccessUrl, {
@@ -371,8 +545,8 @@ export const fetchUpdateUserInfo = (userData) => {
       .then(checkResponse)
       .then((res) => {
         console.log(res);
-        dispatch(updateSuccess(res));
-        localStorage.setItem(res);
+        dispatch(updateSuccess(res)); ////////////////
+        localStorage.setItem(res); ///////////////localStorage.getItem(res.user)
       })
       .catch((error) => {
         if (error.message === "jwt expired") {
@@ -401,26 +575,27 @@ export const fetchUpdateUserInfo = (userData) => {
 };
 
 // Действия связанные с процессом логаута
-const logoutRequest = () => {
+const logoutRequest = (): ILogoutRequest => {
   return {
     type: LOGOUT_SUBMIT,
   };
 };
 
-const logoutSuccess = (res) => {
+const logoutSuccess = (res): ILogoutSuccess => {
+  ///////////////////////////////////////////////////////
   return {
     type: LOGOUT_SUCCESS,
     payload: res.user,
   };
 };
 
-const logoutFailed = () => {
+const logoutFailed = (): ILogoutFailed => {
   return {
     type: LOGOUT_FAILED,
   };
 };
 
-export const fetchLogout = (refreshToken) => {
+export const fetchLogout = (refreshToken: string | undefined) => {
   return (dispatch) => {
     fetch(logoutUrl, {
       method: "POST",
@@ -448,6 +623,13 @@ export const fetchLogout = (refreshToken) => {
 };
 
 // Действия связанные с WebSocket соединением для получения заказов пользователя
-export const wsUserOrdersConnectionStart = () => ({ type: WS_USER_START });
-export const wsUserOrdersConnectionClosed = () => ({ type: WS_USER_CLOSED });
-export const getUserOrders = () => ({ type: WS_USER_GET_ORDERS });
+export const wsUserOrdersConnectionStart =
+  (): IWsUserOrdersConnectionStartAction => ({ type: WS_USER_START });
+export const wsUserOrdersConnectionClosed =
+  (): IWsUserOrdersConnectionClosedAction => ({ type: WS_USER_CLOSED });
+export const getUserOrders = (data: {
+  orders: IOrder[];
+}): IGetUserOrdersAction => ({
+  type: WS_USER_GET_ORDERS,
+  payload: data,
+});

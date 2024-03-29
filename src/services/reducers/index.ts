@@ -15,7 +15,7 @@ export const rootReducer = combineReducers({
   ordersData: ordersReducer, // хранилище заказов всех пользователей приложения
   orderData: orderReducer, // хранилище заказов пользователя
   burgerIngredients: burgerIngredientsReducer, // Хранилище бургерных ингредиентов
-  selectedIngredient: selectedIngredientReducer, // Хранилище выбранного ингредиента
+  ////  selectedIngredient: selectedIngredientReducer, // Хранилище выбранного ингредиента
   createdOrder: orderDetailsReducer, // Хранилище заказа
   tabs: tabsReducer, // Хранилище вкладок
   auth: authReducer, //

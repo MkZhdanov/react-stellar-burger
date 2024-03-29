@@ -1,25 +1,38 @@
 import {
-  WS_CLOSED,
-  WS_ERROR,
-  WS_GET_ORDERS,
   WS_START,
   WS_SUCCESS,
-} from "../actions/orders";
+  WS_ERROR,
+  WS_CLOSED,
+  WS_GET_ORDERS,
+} from "../constants";
+import { IOrder } from "../../utils/types/order";
+import { TOrdersActions } from "../actions/orders";
+
+type TOrdersState = {
+  orders: IOrder[];
+  isLoading: boolean;
+  isConnection: boolean;
+  hasConnectionFailed: boolean;
+  total: number;
+  totalToday: number;
+};
 
 // Начальное состояние редуктора для заказов
-const initialState = {
+const initialState: TOrdersState = {
   orders: [],
   isLoading: false,
   isConnection: false,
   hasConnectionFailed: false,
   total: 0,
   totalToday: 0,
-  errors: [],
 };
 
 // Редуктор для управления состоянием заказов
-export const ordersReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
+export const ordersReducer = (
+  state = initialState,
+  actions: TOrdersActions
+) => {
+  switch (actions.type) {
     case WS_START:
       // Начало подключения к WebSocket
       return {
@@ -37,11 +50,10 @@ export const ordersReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         hasConnectionFailed: true,
-        errors: [...state.errors, payload],
       };
     case WS_GET_ORDERS: {
       // Получение данных о заказах через WebSocket
-      const { orders, total, totalToday } = payload;
+      const { orders, total, totalToday } = actions.payload;
       return {
         ...state,
         isLoading: false,

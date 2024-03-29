@@ -1,6 +1,6 @@
 import styles from "./feed-user.module.css";
 import React, { useEffect, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/hooks";
 import FeedList from "../feed-list/feed-list";
 import RenderContent from "../render-content/render-content";
 import {

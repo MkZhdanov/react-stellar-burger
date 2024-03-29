@@ -1,5 +1,5 @@
 import React, { useMemo, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../../services/hooks";
 import { useDrop } from "react-dnd";
 import styles from "./burger-components.module.css";
 import BurgerComponent from "./burger-component/burger-component";

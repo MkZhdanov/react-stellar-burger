@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import styles from "./order-details.module.css";
 import successImg from "../../assets/images/done.jpg";
 

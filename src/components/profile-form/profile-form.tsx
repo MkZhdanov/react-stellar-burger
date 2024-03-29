@@ -6,7 +6,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { FC, ChangeEvent, FormEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { getCookie } from "../../utils/cookie";
 import { fetchLogout, fetchUpdateUserInfo } from "../../services/actions/auth";
 

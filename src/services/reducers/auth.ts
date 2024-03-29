@@ -29,9 +29,49 @@ import {
   WS_USER_GET_ORDERS,
   WS_USER_START,
   WS_USER_SUCCESS,
-} from "../actions/auth";
+} from "../constants";
+import {
+  ILogin,
+  IUser,
+  IResetPassword,
+  IChangeUserInfo,
+  IRegister,
+} from "../../utils/types/types";
+import { IOrder } from "../../utils/types/order";
+import { TUserActions } from "../actions/auth";
 
-const initialState = {
+type TUserState = {
+  user: IUser | null;
+  loaded: boolean;
+  dataUser: IUser | null;
+  userAuth: boolean;
+  logoutSubmit: boolean;
+  logoutFailed: boolean;
+  forgotPasswordForm: {
+    email: string;
+  };
+  forgotPasswordSubmit: boolean;
+  forgotPasswordFailed: boolean;
+  forgotEmailSent: boolean;
+  resetPasswordForm: IResetPassword;
+  resetPasswordSubmit: boolean;
+  resetPasswordFailed: boolean;
+  resetPasswordRequest: boolean;
+  registerForm: IRegister;
+  registerSubmit: boolean;
+  registerFailed: boolean;
+  loginForm: ILogin;
+  loginSubmit: boolean;
+  loginFailed: boolean;
+  updateInfoSubmit: boolean;
+  updateInfoFailed: boolean;
+  isLoading: boolean;
+  isConnection: boolean;
+  hasConnectionFailed: boolean;
+  orders: IOrder[];
+};
+
+const initialState: TUserState = {
   //авторизация
   user: null,
   loaded: false,
@@ -88,17 +128,16 @@ const initialState = {
   isConnection: false,
   hasConnectionFailed: false,
   orders: [],
-  errors: [],
 };
 
-export const authReducer = (state = initialState, action) => {
-  switch (action.type) {
+export const authReducer = (state = initialState, actions: TUserActions) => {
+  switch (actions.type) {
     case REGISTER_SET_VALUE: // регистрация
       return {
         ...state,
         registerForm: {
           ...state.registerForm,
-          [action.field]: action.value,
+          [actions.field]: actions.value,
         },
       };
     case REGISTER_SUBMIT: {
@@ -129,7 +168,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loginForm: {
           ...state.loginForm,
-          [action.field]: action.value,
+          [actions.field]: actions.value,
         },
       };
     case LOGIN_SUBMIT:
@@ -147,10 +186,10 @@ export const authReducer = (state = initialState, action) => {
         },
         user: {
           ...state.user,
-          email: action.payload.email,
-          name: action.payload.name,
+          email: actions.payload.email,
+          name: actions.payload.name,
         },
-        dataUtser: action.dataUser,
+        dataUser: actions.payload,
         userAuth: true,
       };
     case LOGIN_FAILED:
@@ -165,7 +204,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         forgotPasswordForm: {
           ...state.forgotPasswordForm,
-          [action.field]: action.value,
+          [actions.field]: actions.value,
         },
       };
     case FORGOT_PASSWORD_SUBMIT: {
@@ -194,7 +233,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         resetPasswordForm: {
           ...state.resetPasswordForm,
-          [action.field]: action.value,
+          [actions.field]: actions.value,
         },
       };
     case RESET_PASSWORD_SUBMIT:
@@ -229,7 +268,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loaded: false,
-        user: action.payload,
+        user: actions.payload,
         userAuth: true,
       };
     case GET_ACCESS_FAILED:
@@ -246,7 +285,7 @@ export const authReducer = (state = initialState, action) => {
     case UPDATE_INFO_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        user: actions.payload,
       };
     case UPDATE_INFO_FAILED:
       return {
@@ -288,15 +327,13 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         hasConnectionFailed: true,
-        errors: [...state.errors, action.payload],
       };
     case WS_USER_GET_ORDERS: {
-      const { orders } = action.payload;
       return {
         ...state,
         isLoading: false,
         hasConnectionFailed: false,
-        orders: [...orders],
+        orders: [...actions.payload.orders],
       };
     }
     case WS_USER_CLOSED:

@@ -1,6 +1,6 @@
 import styles from "./feed-icon.module.css";
 import React, { useMemo, FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 
 interface IFeedIconProps {
   id: string;

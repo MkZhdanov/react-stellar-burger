@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import styles from "./feed-item-price.module.css";
 
 interface IFeedItemPriceProps {

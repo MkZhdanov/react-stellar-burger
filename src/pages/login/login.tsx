@@ -1,6 +1,6 @@
 import React, { FC, FormEvent, ChangeEvent } from "react";
 import { Link, useNavigate, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import {
   EmailInput,
   Button,

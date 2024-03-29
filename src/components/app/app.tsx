@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import {
   BrowserRouter as Router,
   Routes,
@@ -27,7 +27,7 @@ import FeedDetails from "../feed-details/feed-details";
 import FeedUser from "../feed-user/feed-user";
 import ProfileForm from "../profile-form/profile-form";
 
-import { getIngredients } from "../../services/actions/ingredients";
+import { getIngredients } from "../../services/thunk/ingredients";
 
 // Основной компонент приложения
 const App: FC = () => {
@@ -42,29 +42,27 @@ const App: FC = () => {
   };
 
   // Деструктуризация состояния созданного заказа для модального окна заказа
-  const {
-    loading: loadingModalOrder,
-    error: errorModalOrder,
-    open: openModalOrder,
-  } = useSelector((state) => state.createdOrder);
+  //  const {
+  //    loading: loadingModalOrder,
+  //    error: errorModalOrder,
+  //    open: openModalOrder,
+  //  } = useSelector((state) => state.createdOrder);
 
   // Получение состояния открытия модального окна выбранного ингредиента
-  const openModalIngredient = useSelector(
-    (state) => state.selectedIngredient.open
-  );
+  //  const openModalIngredient = useSelector(
+  //    (state) => state.selectedIngredient.open
+  //  );
 
   // Функция для закрытия модального окна
-  const closeModal = () => {
-    if (openModalIngredient) dispatch(closeSelectedIngredient());
-    if (errorModalOrder === null && !loadingModalOrder && openModalOrder)
-      dispatch(closeOrderModal());
-  };
+  //  const closeModal = () => {
+  //    if (openModalIngredient) dispatch(closeSelectedIngredient());
+  //    if (errorModalOrder === null && !loadingModalOrder && openModalOrder)
+  //      dispatch(closeOrderModal());
+  //  };
 
   React.useEffect(() => {
     dispatch(fetchCheckAccess());
   }, [dispatch]);
-
-  //==========================================================================
 
   // Функция для получения данных пользователя и ингредиентов
   const fetchData = useCallback(() => {
@@ -144,11 +142,6 @@ const App: FC = () => {
           )}
         </div>
       </main>
-      {errorModalOrder === null && !loadingModalOrder && openModalOrder && (
-        <Modal onClose={closeModal}>
-          <OrderDetails />
-        </Modal>
-      )}
     </div>
   );
 };

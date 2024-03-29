@@ -1,6 +1,6 @@
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import React, { FC, FormEvent, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import styles from "./register.module.css";
 import {
   EmailInput,

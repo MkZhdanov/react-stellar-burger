@@ -1,5 +1,5 @@
 import React, { useMemo, FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import { useParams } from "react-router-dom";
 import styles from "./ingredient-details.module.css";
 import EnergyItem from "./energy-item/energy-item";

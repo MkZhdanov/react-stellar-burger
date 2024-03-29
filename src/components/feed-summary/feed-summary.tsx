@@ -1,5 +1,5 @@
 import styles from "./feed-summary.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks";
 import React, { useMemo, FC } from "react";
 import { ORDER_STATUSES } from "../../utils/data";
 import FeedSummaryBlock from "../feed-summary-block/feed-summary-block";

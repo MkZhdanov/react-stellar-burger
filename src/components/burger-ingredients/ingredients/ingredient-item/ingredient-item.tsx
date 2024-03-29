@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../../../services/hooks";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import styles from "./ingredient-item.module.css";
 import {

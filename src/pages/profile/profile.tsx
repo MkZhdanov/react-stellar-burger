@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useState, FC } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hooks";
 import { getCookie } from "../../utils/cookie";
 import { fetchLogout, fetchUpdateUserInfo } from "../../services/actions/auth";
 

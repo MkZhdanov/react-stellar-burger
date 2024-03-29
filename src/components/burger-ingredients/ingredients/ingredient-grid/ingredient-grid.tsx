@@ -1,25 +1,25 @@
-import React, { useMemo, useEffect, useRef, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useMemo, FC } from "react";
+import { useSelector } from "../../../../services/hooks";
 import styles from "./ingredient-grid.module.css";
 import IngredientItem from "../ingredient-item/ingredient-item";
-import { setScrollRefAction } from "../../../../services/actions/tabs";
-import { component_tabs } from "../../../../utils/data";
 
 interface IIngredientGridProps {
-  tab: string;
+  data: {
+    tabKey: string;
+    tabName: string;
+  };
+  rowRef: React.RefObject<HTMLLIElement>;
 }
 
-const IngredientGrid: FC<IIngredientGridProps> = ({ tab }) => {
-  const dispatch = useDispatch();
+const IngredientGrid: FC<IIngredientGridProps> = ({ data, rowRef }) => {
   // Получение списка ингредиентов
-  const ingredients = useSelector((state) => state.ingredientsData.ingredients);
-  // Создание ref для текущей строки
-  const rowRef = useRef(null);
+  const ingredients = useSelector((state) => state.ingredientsData.ingredients); //???????????????
+  const { tabKey, tabName } = data;
 
   // Фильтрация ингредиентов для текущей вкладки
   const filteredIngredients = useMemo(
-    () => ingredients.filter((ingredient) => ingredient.type === tab),
-    [ingredients, tab]
+    () => ingredients.filter((ingredient) => ingredient.type === tabKey),
+    [ingredients, tabKey]
   );
 
   // Создание компонентов ингредиентов для текущей вкладки
@@ -31,16 +31,9 @@ const IngredientGrid: FC<IIngredientGridProps> = ({ tab }) => {
     [filteredIngredients]
   );
 
-  // Эффект для установки ref в состояние Redux
-  useEffect(() => {
-    dispatch(setScrollRefAction({ [tab]: rowRef }));
-  }, [dispatch]);
-
   return (
-    <li className={styles.list} ref={rowRef} id={tab}>
-      <h3 className={"text text_type_main-medium mt-10 mb-6"}>
-        {component_tabs[tab]}
-      </h3>
+    <li className={styles.list} ref={rowRef} id={tabKey}>
+      <h3 className={"text text_type_main-medium mt-10 mb-6"}>{tabName}</h3>
       <ul className={`${styles.grid} pl-4 pr-4`}>{ingredientComponents}</ul>
     </li>
   );

@@ -1,17 +1,19 @@
 import React, { useMemo, useCallback, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../../services/hooks";
 import styles from "./ingredients.module.css";
 import IngredientGrid from "./ingredient-grid/ingredient-grid";
 import { component_tabs } from "../../../utils/data";
 import { setActiveTab } from "../../../services/actions/tabs";
 
+interface IIngredientsProps {
+  rowsRefObj: { [key: string]: React.RefObject<HTMLLIElement> };
+}
+
 // Компонент отображения ингредиентов
-const Ingredients: FC = () => {
+const Ingredients: FC<IIngredientsProps> = ({ rowsRefObj }) => {
   // Получение состояний из Redux
-  const { activeTab, scrollRefs } = useSelector((state) => state.tabs);
+  const { tabs: tabsData, activeTab } = useSelector((state) => state.tabs);
   const dispatch = useDispatch();
-  // Массив ключей для вкладок
-  const tabKeys = Object.keys(component_tabs);
 
   const TAB_OFFSET = 10;
   const ROW_HEIGHT_THRESHOLD = 15;
@@ -20,12 +22,15 @@ const Ingredients: FC = () => {
   const calculateDistanceFromTop = useCallback(
     (targetElement) => {
       const containerRect = targetElement.getBoundingClientRect();
-      const tabRefs = tabKeys.map((tab) => scrollRefs[tab].current);
+      const tabRefs = tabsData.map(
+        ([tabKey, tabName]) => rowsRefObj[tabKey].current
+      );
 
       const lastTabRef = tabRefs[tabRefs.length - 1];
       const lastTabRect = lastTabRef?.getBoundingClientRect();
 
       if (
+        lastTabRef !== null &&
         lastTabRect &&
         lastTabRect.y + lastTabRect.height <=
           containerRect.y + containerRect.height + TAB_OFFSET
@@ -41,22 +46,31 @@ const Ingredients: FC = () => {
       });
       return newTabRef ? newTabRef.id : null;
     },
-    [tabKeys, scrollRefs]
+    [rowsRefObj, tabsData]
   );
 
   // Обработчик события скролла
   const scrollHandler = useCallback(
     (event) => {
-      const newRow = calculateDistanceFromTop(event.currentTarget);
-      newRow && newRow !== activeTab && dispatch(setActiveTab(newRow));
+      const newActiveTab = calculateDistanceFromTop(event.currentTarget);
+      if (newActiveTab && newActiveTab !== activeTab) {
+        dispatch(setActiveTab(newActiveTab));
+      }
     },
     [calculateDistanceFromTop, dispatch, activeTab]
   );
 
   // Создание компонентов строк с ингредиентами
   const ingredientsGrids = useMemo(
-    () => tabKeys.map((tab) => <IngredientGrid key={tab} tab={tab} />),
-    [tabKeys]
+    () =>
+      tabsData.map(([tabKey, tabName]: string[]) => (
+        <IngredientGrid
+          key={tabKey}
+          data={{ tabKey, tabName }}
+          rowRef={rowsRefObj[tabKey]}
+        />
+      )),
+    [tabsData]
   );
 
   return (

@@ -1,12 +1,12 @@
 import React, { useMemo, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../../services/hooks";
 import { useNavigate } from "react-router-dom";
 import styles from "./order-info.module.css";
 import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { createOrder } from "../../../services/actions/order-details";
+import { createOrder } from "../../../services/thunk/order-details";
 import { IIngredient } from "../../../utils/types/ingredients";
 
 // Компонент для отображения цены бургера и кнопки оформления заказа

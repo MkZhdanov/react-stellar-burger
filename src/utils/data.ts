@@ -1,22 +1,22 @@
 import { v4 as uuidv4 } from "uuid";
 
 // Константы, представляющие различные типы ингредиентов для вкладок
-export const component_tabs = {
-  bun: "Булки",
-  sauce: "Соусы",
-  main: "Начинки",
-};
+export enum component_tabs {
+  bun = "Булки",
+  sauce = "Соусы",
+  main = "Начинки",
+}
 
 // Генерация уникального ключа
 export const generateKey = () => uuidv4();
 
 // Статусы заказов
-export const ORDER_STATUSES = {
-  created: "created",
-  pending: "pending",
-  done: "done",
-  canselled: "canselled",
-};
+export enum ORDER_STATUSES {
+  created = "created",
+  pending = "pending",
+  done = "done",
+  cancelled = "cancelled",
+}
 
 // базовый url  и эндпойнты
 export const BASE_URL = "https://norma.nomoreparties.space/api/";
