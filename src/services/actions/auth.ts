@@ -459,7 +459,7 @@ const accessFailed = (): IGetAccessFailed => {
   };
 };
 
-export const fetchCheckAccess = (accessToken: string | undefined) => {
+export const fetchCheckAccess = () => {
   return (dispatch) => {
     fetch(checkAccessUrl, {
       method: "GET",
@@ -467,7 +467,7 @@ export const fetchCheckAccess = (accessToken: string | undefined) => {
         authorization: "Bearer " + getCookie("accessToken"),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(accessToken),
+      // body: JSON.stringify(accessToken),
     })
       .then(checkResponse)
       .then((res) => {

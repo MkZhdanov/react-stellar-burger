@@ -37,7 +37,7 @@ const BurgerComponents: FC = () => {
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(item) {
+    drop(item: IIngredient & IUuid) {
       item && item.type === "bun"
         ? dispatch(addBunBurger(item))
         : dispatch(addIngredientBurger(item));

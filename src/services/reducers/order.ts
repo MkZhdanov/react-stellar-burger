@@ -7,14 +7,14 @@ import { IOrder } from "../../utils/types/order";
 import { TOrderActions } from "../actions/order";
 
 type TOrderState = {
-  information: IOrder | {};
+  information: IOrder | null;
   isRequesting: boolean;
   hasRequestFailed: boolean;
 };
 
 // Начальное состояние редюсера заказов
 const initialState: TOrderState = {
-  information: {},
+  information: null,
   isRequesting: false,
   hasRequestFailed: false,
 };

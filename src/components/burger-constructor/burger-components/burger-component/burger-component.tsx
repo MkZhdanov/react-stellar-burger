@@ -42,7 +42,7 @@ const BurgerComponent: FC<IIngredientProps> = ({ position, iconVis, data }) => {
   // Хук для обработки бросания
   const [, drop] = useDrop({
     accept: "item",
-    hover: (item) => {
+    hover: (item: IUuid) => {
       const { key: firstKey } = item;
       const secondKey = data.key;
       if (firstKey && secondKey && firstKey !== secondKey) {
@@ -52,7 +52,7 @@ const BurgerComponent: FC<IIngredientProps> = ({ position, iconVis, data }) => {
   });
 
   // Создаем общий реф
-  const sharedRef = useRef();
+  const sharedRef = useRef<HTMLLIElement>(null);
   // Привязываем общий реф к обоим хукам
   if (iconVis) {
     drag(sharedRef);

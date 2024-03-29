@@ -42,22 +42,22 @@ const App: FC = () => {
   };
 
   // Деструктуризация состояния созданного заказа для модального окна заказа
-  //  const {
-  //    loading: loadingModalOrder,
-  //    error: errorModalOrder,
-  //    open: openModalOrder,
-  //  } = useSelector((state) => state.createdOrder);
+  // const {
+  //   loading: loadingModalOrder,
+  //   error: errorModalOrder,
+  //   open: openModalOrder,
+  // } = useSelector((state) => state.createdOrder);
 
   // Получение состояния открытия модального окна выбранного ингредиента
-  //  const openModalIngredient = useSelector(
-  //    (state) => state.selectedIngredient.open
-  //  );
+  // const openModalIngredient = useSelector(
+  //   (state) => state.selectedIngredient.open
+  // );
 
   // Функция для закрытия модального окна
-  //  const closeModal = () => {
-  //    if (openModalIngredient) dispatch(closeSelectedIngredient());
-  //    if (errorModalOrder === null && !loadingModalOrder && openModalOrder)
-  //      dispatch(closeOrderModal());
+  // const closeModal = () => {
+  //   if (openModalIngredient) dispatch(closeSelectedIngredient());
+  //   if (errorModalOrder === null && !loadingModalOrder && openModalOrder)
+  //     dispatch(closeOrderModal());
   //  };
 
   React.useEffect(() => {
