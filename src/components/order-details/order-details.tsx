@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { useSelector } from "../../services/hooks";
 import styles from "./order-details.module.css";
 import successImg from "../../assets/images/done.jpg";
+import RenderContent from "../render-content/render-content";
 
 const OrderDetails: FC = () => {
   const { number } = useSelector((state) => state.createdOrder.order);

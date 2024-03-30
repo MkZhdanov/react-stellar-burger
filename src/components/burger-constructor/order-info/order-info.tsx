@@ -8,6 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createOrder } from "../../../services/thunk/order-details";
 import { IIngredient } from "../../../utils/types/ingredients";
+import { getInformationOrder } from "../../../services/thunk/order";
 
 // Компонент для отображения цены бургера и кнопки оформления заказа
 const OrderInfo: FC = () => {
@@ -42,6 +43,7 @@ const OrderInfo: FC = () => {
       return;
     }
     dispatch(createOrder(order));
+    ////dispatch(getInformationOrder(order));
   };
   return (
     <div className={`${styles.container} mt-10 mr-4 ml-4`}>

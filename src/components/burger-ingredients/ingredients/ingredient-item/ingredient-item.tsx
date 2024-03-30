@@ -6,7 +6,6 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { openSelectedIngredient } from "../../../../services/actions/ingredient-details";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IIngredient } from "../../../../utils/types/ingredients";
 
@@ -31,16 +30,6 @@ const IngredientItem: FC<IIngredientProps> = ({ data }) => {
     const state = { background: location };
     navigate(`/ingredients/${data._id}`, { state });
   }, [navigate, location, data]);
-
-  // Обработчик нажатия клавиши Enter для выбора ингредиента
-  const handleKeyPress = useCallback(
-    (event) => {
-      if (event.key === "Enter") {
-        dispatch(openSelectedIngredient(data));
-      }
-    },
-    [dispatch, data]
-  );
 
   // Вычисление количества ингредиента в бургере с использованием useMemo
   const count = useMemo(() => {
@@ -74,7 +63,6 @@ const IngredientItem: FC<IIngredientProps> = ({ data }) => {
       <div
         className={styles.ingredient_item}
         onClick={handleClick}
-        onKeyPress={handleKeyPress}
         ref={drag}
         style={{ opacity: isDrag ? 0.5 : 1 }}
       >

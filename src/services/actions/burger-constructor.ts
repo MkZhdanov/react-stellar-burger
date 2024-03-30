@@ -6,20 +6,21 @@ import {
   REMOVE_BUN_BURGER,
   UPDATE_INGREDIENT_ORDER,
 } from "../constants";
+import { IIngredient, IUuid } from "../../utils/types/types";
 
 export interface IAddBunBurgerAction {
   readonly type: typeof ADD_BUN_BURGER;
-  readonly payload: any; //////////////////////////////////////////////////////////
+  readonly payload: IIngredient & IUuid;
 }
 
 export interface IAddIngredientBurgerAction {
   readonly type: typeof ADD_INGREDIENT_BURGER;
-  readonly payload: any; /////////////////////////////////////////////////////////////
+  readonly payload: IIngredient & IUuid;
 }
 
 export interface IRemoveIngredientBurgerAction {
   readonly type: typeof REMOVE_INGREDIENT_BURGER;
-  readonly payload: any; ///////////////////////////////////////////////////////////////
+  readonly payload: string;
 }
 
 export interface IRemoveBunBurgerAction {
@@ -39,14 +40,16 @@ export type TBurgerConstructorActions =
   | IUpdateIngredientOrderAction;
 
 // Создает действие для добавления булки в конструктор бургера
-export const addBunBurger = (bun): IAddBunBurgerAction => ({
+export const addBunBurger = (
+  bun: IIngredient & IUuid
+): IAddBunBurgerAction => ({
   type: ADD_BUN_BURGER,
   payload: bun,
 });
 
 // Создает действие для добавления ингредиента в конструктор бургера
 export const addIngredientBurger = (
-  ingredient
+  ingredient: IIngredient & IUuid
 ): IAddIngredientBurgerAction => ({
   type: ADD_INGREDIENT_BURGER,
   payload: { ...ingredient, key: generateKey() },
@@ -54,7 +57,7 @@ export const addIngredientBurger = (
 
 // Создает действие для удаления ингредиента из конструктора бургера
 export const removeIngredientBurger = (
-  ingredientIndex
+  ingredientIndex: string
 ): IRemoveIngredientBurgerAction => ({
   type: REMOVE_INGREDIENT_BURGER,
   payload: ingredientIndex,
@@ -67,8 +70,8 @@ export const removeBunBurger = (): IRemoveBunBurgerAction => ({
 
 // Создает действие для обновления порядка ингредиентов
 export const updateIngredientOrder = (
-  firstKey,
-  secondKey
+  firstKey: string,
+  secondKey: string
 ): IUpdateIngredientOrderAction => ({
   type: UPDATE_INGREDIENT_ORDER,
   payload: { firstKey, secondKey },

@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 
 import { burgerIngredientsReducer } from "./burger-constructor";
-import { selectedIngredientReducer } from "./ingredient-details";
 import { orderDetailsReducer } from "./order-details";
 import { tabsReducer } from "./tabs";
 import { authReducer } from "./auth";
@@ -15,7 +14,6 @@ export const rootReducer = combineReducers({
   ordersData: ordersReducer, // хранилище заказов всех пользователей приложения
   orderData: orderReducer, // хранилище заказов пользователя
   burgerIngredients: burgerIngredientsReducer, // Хранилище бургерных ингредиентов
-  ////  selectedIngredient: selectedIngredientReducer, // Хранилище выбранного ингредиента
   createdOrder: orderDetailsReducer, // Хранилище заказа
   tabs: tabsReducer, // Хранилище вкладок
   auth: authReducer, //

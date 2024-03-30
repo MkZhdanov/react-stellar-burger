@@ -8,7 +8,7 @@ import { AppThunk } from "../index";
 
 // Отправляет POST-запрос на сервер с указанными ингредиентами для создания заказа
 export const createOrder =
-  (ingredients): AppThunk =>
+  (ingredients: string[]): AppThunk =>
   async (dispatch) => {
     dispatch(createOrderRequest());
     try {

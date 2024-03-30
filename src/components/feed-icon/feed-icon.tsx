@@ -12,10 +12,11 @@ interface IFeedIconProps {
 const FeedIcon: FC<IFeedIconProps> = ({ id, zIndex, col }) => {
   const ingredients = useSelector((state) => state.ingredientsData.ingredients);
 
-  const { image_mobile: image, name } = useMemo(
+  const findIngredient = useMemo(
     () => ingredients.find((ingredient) => ingredient._id === id),
     [ingredients, id]
   );
+  const { image_mobile: image, name } = findIngredient || {};
 
   return (
     <div className={styles.container} style={{ zIndex }}>

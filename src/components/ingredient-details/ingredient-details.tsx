@@ -7,13 +7,32 @@ import EnergyItem from "./energy-item/energy-item";
 // Основной компонент для информации об ингридиенте
 const IngredientDetails: FC = () => {
   // Стандартные данные об ингредиенте, используемые при отсутствии информации
-  const DEFAULT_INFO_INGREDIENT = {
+  const DEFAULT_INFO_INGREDIENT: {
+    _id: string;
+    name: string;
+    type: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+    __v: number;
+  } = {
+    _id: "",
+    name: "Информация об ингридиенте не найдена :(",
+    type: "bun",
     proteins: 0,
     fat: 0,
     carbohydrates: 0,
     calories: 0,
+    price: 0,
     image: "https://... (ссылка на изображение)",
-    name: "Информация об ингридиенте не найдена :(",
+    image_mobile: "https://... (ссылка на изображение)",
+    image_large: "https://... (ссылка на изображение)",
+    __v: 0,
   };
 
   // Получение id ингредиента из URL с использованием хука useParams

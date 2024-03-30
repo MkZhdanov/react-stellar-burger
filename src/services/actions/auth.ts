@@ -47,8 +47,10 @@ import {
   ILogin,
   IResetPassword,
   IChangeUserInfo,
+  IAuthSuccess,
 } from "../../utils/types/types";
 import { IOrder } from "../../utils/types/order";
+import { AppDispatch } from "..";
 
 export interface ISetRegisterValue {
   readonly type: typeof REGISTER_SET_VALUE;
@@ -156,7 +158,6 @@ export interface ILogoutRequest {
 
 export interface ILogoutSuccess {
   readonly type: typeof LOGOUT_SUCCESS;
-  readonly payload: IUser;
 }
 
 export interface ILogoutFailed {
@@ -247,7 +248,7 @@ const registerFailed = (): IRegisterFailed => {
 };
 
 export const fetchRegister = (userData: IRegister, callback: () => void) => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch(registerSubmit());
     fetch(registerUrl, {
       method: "POST",
@@ -287,12 +288,11 @@ const loginSubmit = (): ILoginSubmit => {
     type: LOGIN_SUBMIT,
   };
 };
-/////////////////////////////////////////////////////////////////// dataUser: res,
-const loginSuccess = (res): ILoginSuccess => {
+const loginSuccess = (res: IAuthSuccess): ILoginSuccess => {
   return {
     type: LOGIN_SUCCESS,
     payload: res.user,
-    dataUser: res,
+    dataUser: res.user,
   };
 };
 
@@ -303,7 +303,7 @@ const loginFailed = (): ILoginFailed => {
 };
 
 export const fetchLogin = (userData: ILogin) => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch(loginSubmit());
     fetch(loginUrl, {
       method: "POST",
@@ -361,7 +361,7 @@ export const fetchForgotPassword = (
   email: { email: string },
   callback: () => void
 ) => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch(submitForm());
     fetch(forgotPasswordUrl, {
       method: "POST",
@@ -416,7 +416,7 @@ const submitFailedResetPassword = (): IPasswordFailedValue => {
 };
 
 export const fetchResetPassword = (password: IResetPassword) => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch(submitResetPassword());
     fetch(resetPasswordUrl, {
       method: "POST",
@@ -444,9 +444,8 @@ const accessLoaded = (): IGetAccessLoaded => {
     type: GET_ACCESS_LOADED,
   };
 };
-
-const accessSuccess = (res): IAccessSuccess => {
-  ///////////////// (user:IUser)  payload: user,
+////////проверить на необходимость////////////
+const accessSuccess = (res: IAuthSuccess): IAccessSuccess => {
   return {
     type: GET_ACCESS_SUCCESS,
     payload: res.user,
@@ -460,7 +459,7 @@ const accessFailed = (): IGetAccessFailed => {
 };
 
 export const fetchCheckAccess = () => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     fetch(checkAccessUrl, {
       method: "GET",
       headers: {
@@ -487,7 +486,7 @@ export const fetchCheckAccess = () => {
 
 //обновление токена
 export const refreshToken = (refreshToken: string | undefined) => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     fetch(tokenUrl, {
       method: "POST",
       headers: {
@@ -499,7 +498,7 @@ export const refreshToken = (refreshToken: string | undefined) => {
       .then(checkResponse)
       .then((res) => {
         console.log(res);
-        dispatch(fetchCheckAccess("accessToken"));
+        dispatch(fetchCheckAccess());
         setCookie("accessToken", res.accessToken.split("Bearer ")[1]);
         setCookie("refreshToken", res.refreshToken);
       })
@@ -517,7 +516,7 @@ const updateRequest = (): IUpdateRequest => {
   };
 };
 
-const updateSuccess = (res): IUpdateSuccess => {
+const updateSuccess = (res: IAuthSuccess): IUpdateSuccess => {
   ///////////////////////////////////////////////////////////////////////
   return {
     type: UPDATE_INFO_SUCCESS,
@@ -532,7 +531,7 @@ const updateFailed = (): IUpdateFailed => {
 };
 
 export const fetchUpdateUserInfo = (userData: IChangeUserInfo) => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch(updateRequest());
     fetch(checkAccessUrl, {
       method: "PATCH",
@@ -546,25 +545,24 @@ export const fetchUpdateUserInfo = (userData: IChangeUserInfo) => {
       .then((res) => {
         console.log(res);
         dispatch(updateSuccess(res)); ////////////////
-        localStorage.setItem(res); ///////////////localStorage.getItem(res.user)
+        //////// localStorage.getItem(res); ///////////////localStorage.setItem(res.user)
       })
       .catch((error) => {
         if (error.message === "jwt expired") {
-          dispatch(refreshToken("refreshToken")).then(() => {
-            fetch(checkAccessUrl, {
-              method: "PATCH",
-              headers: {
-                authorization: "Bearer " + getCookie("accessToken"),
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(userData),
-            })
-              .then(checkResponse)
-              .then((res) => {
-                console.log(res);
-                dispatch(updateSuccess(res));
-              });
-          });
+          dispatch(refreshToken("refreshToken"));
+          fetch(checkAccessUrl, {
+            method: "PATCH",
+            headers: {
+              authorization: "Bearer " + getCookie("accessToken"),
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          })
+            .then(checkResponse)
+            .then((res) => {
+              console.log(res);
+              dispatch(updateSuccess(res));
+            });
         }
       })
       .catch((error) => {
@@ -581,11 +579,10 @@ const logoutRequest = (): ILogoutRequest => {
   };
 };
 
-const logoutSuccess = (res): ILogoutSuccess => {
+const logoutSuccess = (): ILogoutSuccess => {
   ///////////////////////////////////////////////////////
   return {
     type: LOGOUT_SUCCESS,
-    payload: res.user,
   };
 };
 
@@ -596,7 +593,7 @@ const logoutFailed = (): ILogoutFailed => {
 };
 
 export const fetchLogout = (refreshToken: string | undefined) => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     fetch(logoutUrl, {
       method: "POST",
       headers: {
@@ -608,7 +605,7 @@ export const fetchLogout = (refreshToken: string | undefined) => {
       .then(checkResponse)
       .then((res) => {
         console.log(res);
-        dispatch(logoutSuccess(res));
+        dispatch(logoutSuccess());
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
       })

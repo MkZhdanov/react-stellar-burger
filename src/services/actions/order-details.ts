@@ -4,6 +4,7 @@ import {
   CREATE_ORDER_FAILURE,
   CLOSE_ORDER_MODAL,
 } from "../constants";
+import { IMyOrderResponse } from "../../utils/types/types";
 
 export interface ICreateOrderRequestAction {
   readonly type: typeof CREATE_ORDER_REQUEST;
@@ -11,7 +12,7 @@ export interface ICreateOrderRequestAction {
 
 export interface ICreateOrderSuccessAction {
   readonly type: typeof CREATE_ORDER_SUCCESS;
-  readonly payload;
+  readonly payload: IMyOrderResponse;
 }
 
 export interface ICreateOrderFailureAction {
@@ -34,7 +35,9 @@ export const createOrderRequest = (): ICreateOrderRequestAction => ({
 });
 
 // Создатель действия для указания успешного завершения запроса на создание заказа
-export const createOrderSuccess = (data): ICreateOrderSuccessAction => ({
+export const createOrderSuccess = (
+  data: IMyOrderResponse
+): ICreateOrderSuccessAction => ({
   type: CREATE_ORDER_SUCCESS,
   payload: data,
 });

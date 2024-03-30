@@ -5,79 +5,114 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { FC, ChangeEvent, FormEvent } from "react";
+import React, { FC, ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "../../services/hooks";
-import { getCookie } from "../../utils/cookie";
-import { fetchLogout, fetchUpdateUserInfo } from "../../services/actions/auth";
+import { fetchUpdateUserInfo } from "../../services/actions/auth";
 
 const ProfileForm: FC = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const [value, setValue] = React.useState(user);
+  interface FormValues {
+    email?: string;
+    name?: string;
+    password?: string;
+    code?: string;
+  }
 
-  const [input, setInput] = React.useState({
-    name: false,
-    email: false,
+  interface FormState {
+    values: FormValues;
+    handleChange: (evt: ChangeEvent<HTMLInputElement>) => void;
+    setValues: (values: FormValues) => void;
+  }
+
+  // Создаем кастомный хук для управления формой
+  function useForm(inputValues: FormValues): FormState {
+    // Инициализация состояния с начальными значениями формы
+    const [values, setValues] = useState<FormValues>(inputValues);
+
+    // Обработчик изменения значений полей формы
+    const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+      // Извлекаем имя и значение из события изменения
+      const { name, value } = evt.target;
+      // Обновляем состояние, сохраняя предыдущие значения и добавляя новое значение
+      setValues({ ...values, [name]: value });
+    };
+
+    // Возвращаем объект с текущими значениями формы, обработчиком изменения и функцией установки значений
+    return { values, handleChange, setValues };
+  }
+
+  const { values, handleChange, setValues } = useForm({
+    name: user ? user.name : "",
+    email: user ? user.email : "",
     password: "",
   });
+  // Состояние для отслеживания отправки формы
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
-  const refreshToken = getCookie("refreshToken");
+  // Проверка, были ли изменения в форме
+  const isFormChanged =
+    user &&
+    (user.name !== values.name ||
+      user.email !== values.email ||
+      values.password);
+  // Проверка валидности формы
+  const isFormValid = values.name && values.email && values.password;
 
-  const [isChange, setIsChange] = React.useState(false);
-
-  const logout = () => {
-    dispatch(fetchLogout(refreshToken));
+  // Обработчик отправки формы
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsFormSubmitted(true);
+    dispatch(fetchUpdateUserInfo(values));
+    console.log(values);
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue({ ...value, [e.target.name]: e.target.value });
-    setIsChange(true);
+  // Обработчик отмены редактирования
+  const onCancelEditing = () => {
+    // Восстановление значений формы
+    setValues({
+      name: user ? user.name : "",
+      email: user ? user.email : "",
+      password: "",
+    });
+    setIsFormSubmitted(false);
   };
 
-  function onReset() {
-    setValue({ name: user.name, email: user.email, password: "" });
-    setIsChange(false);
-  }
-
-  function profileFormSubmit(e: FormEvent) {
-    e.preventDefault();
-    dispatch(fetchUpdateUserInfo(value));
-    setIsChange(false);
-  }
+  if (isFormSubmitted && isFormChanged && isFormValid) onCancelEditing();
 
   return (
-    <form onSubmit={profileFormSubmit} className={styles.formContainer}>
+    <form onSubmit={handleSubmit} className={styles.formContainer}>
       <Input
-        onChange={onChange}
-        value={value?.name || ""}
+        onChange={handleChange}
+        value={values.name!}
         placeholder={"Имя"}
         name={"name"}
         extraClass="mb-6"
       />
       <EmailInput
-        onChange={onChange}
-        value={value?.email || ""}
+        onChange={handleChange}
+        value={values.email!}
         name={"email"}
         placeholder={"Логин"}
         isIcon={true}
         extraClass="mb-6"
       />
       <PasswordInput
-        onChange={onChange}
-        value={value?.password || ""}
+        onChange={handleChange}
+        value={values.password!}
         name={"password"}
         placeholder={"Пароль"}
         icon="EditIcon"
         extraClass="mb-6"
       />
-      {isChange && (
+      {isFormChanged && (
         <div className={` ${styles.buttonBlock}`}>
           <Button
             size="medium"
             htmlType="button"
             type="secondary"
-            onClick={onReset}
+            onClick={onCancelEditing}
           >
             Отмена
           </Button>

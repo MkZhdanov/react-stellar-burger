@@ -6,6 +6,7 @@ import {
   UPDATE_INGREDIENT_ORDER,
 } from "../constants";
 import { TBurgerConstructorActions } from "../actions/burger-constructor";
+import { IIngredient, IUuid } from "../../utils/types/types";
 
 type TBurgerConstructorState = {
   bun: any; ////////////////////////////////////////////////
@@ -41,7 +42,7 @@ export const burgerIngredientsReducer = (
     // Удаление ингредиента из состояния
     case REMOVE_INGREDIENT_BURGER: {
       const ingredientIndex = state.ingredients.findIndex(
-        (ingredient) => ingredient.key === actions.payload
+        (ingredient: IIngredient & IUuid) => ingredient.key === actions.payload
       );
       if (ingredientIndex !== -1) {
         const updatedIngredients = [...state.ingredients];

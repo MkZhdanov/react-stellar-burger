@@ -5,17 +5,20 @@ import {
   CLOSE_ORDER_MODAL,
 } from "../constants";
 import { TOrderDetailsActions } from "../actions/order-details";
+import { IMyOrderResponse } from "../../utils/types/types";
 
 type TOrderDetailsState = {
   loading: boolean;
-  order;
+  order: IMyOrderResponse | any;
+  error: boolean | null;
   open: boolean;
 };
 
 // Начальное состояние для редюсера заказов
-const initialState = {
+const initialState: TOrderDetailsState = {
   loading: false,
   order: null,
+  error: null,
   open: false,
 };
 
@@ -31,7 +34,8 @@ export const orderDetailsReducer = (
         ...state,
         loading: true,
         order: null,
-        open: false,
+        error: null,
+        open: false, /////////++++++++++++++++
       };
     // Установка состояния загрузки в false и обновление заказа данными из payload
     case CREATE_ORDER_SUCCESS:
@@ -46,6 +50,7 @@ export const orderDetailsReducer = (
       return {
         ...state,
         loading: false,
+        error: true,
       };
     // Закрытие состояния заказа
     case CLOSE_ORDER_MODAL:

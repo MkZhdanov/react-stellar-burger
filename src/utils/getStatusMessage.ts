@@ -1,7 +1,7 @@
 import { ORDER_STATUSES } from "./data";
 
 // функция возвращает сообщение о статусе заказа
-export default function getStatusMessage(status) {
+export default function getStatusMessage(status: ORDER_STATUSES) {
   switch (status) {
     //  статус заказа - "Выполнен"
     case ORDER_STATUSES.done:
@@ -28,7 +28,7 @@ export default function getStatusMessage(status) {
         text: "Ожидайте подтверждение и начало приготовления",
       };
     //  статус заказа - "Отменен"
-    case ORDER_STATUSES.canselled:
+    case ORDER_STATUSES.cancelled:
       return {
         message: "Отменен",
         className: "text_color_inactive",
