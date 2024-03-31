@@ -59,8 +59,8 @@ export const ordersReducer = (
         isLoading: false,
         hasConnectionFailed: false,
         orders: [...orders],
-        total,
-        totalToday,
+        total: total,
+        totalToday: totalToday,
       };
     }
     case WS_CLOSED:

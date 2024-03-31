@@ -79,3 +79,17 @@ export interface IMyOrderResponse {
   number: number;
   price: number;
 }
+
+export interface IOptions {
+  method: string;
+  headers: {
+    "Content-Type": string;
+    Authorization: string;
+  };
+  body: string;
+}
+
+export interface IUpdateIngredientOrder {
+  firstKey: string;
+  secondKey: string;
+}

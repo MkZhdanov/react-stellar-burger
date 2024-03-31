@@ -2,11 +2,12 @@
 import { Middleware } from "redux";
 import { getCookie } from "../../utils/cookie";
 import { IWsOptions } from "../../utils/types/types";
+import { RootState } from "..";
 
 export const socketMiddleware = (
   wsUrl: string,
   wsActions: IWsOptions
-): Middleware => {
+): Middleware<{}, RootState> => {
   return (store) => (next) => (action) => {
     let socket: WebSocket | null = null; // Инициализация переменной для хранения объекта WebSocket
     const { dispatch } = store;
@@ -29,11 +30,11 @@ export const socketMiddleware = (
     // Обработка событий WebSocket, если объект WebSocket инициализирован
     if (socket) {
       // Обработка события открытия соединения
-      socket.onopen = (event) => dispatch({ type: onOpen, payload: event });
+      socket.onopen = (event) => dispatch({ type: onOpen });
 
       // Обработка события ошибки соединения
       socket.onerror = (event) => {
-        dispatch({ type: onError, payload: event });
+        dispatch({ type: onError });
       };
 
       // Обработка события получения сообщения

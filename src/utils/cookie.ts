@@ -2,7 +2,9 @@
 export function setCookie(
   name: string,
   value: string,
-  props: { [key: string]: any } & { expires?: number | Date | string } = {}
+  props: { [key: string]: number | Date | string | boolean } & {
+    expires?: number | Date | string;
+  } = {}
 ) {
   props = {
     path: "/", //задаем корневой адрес для cookies

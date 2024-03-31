@@ -20,11 +20,13 @@ const OrderInfo: FC = () => {
   const { bun, ingredients } = useSelector((state) => state.burgerIngredients);
 
   // Создаем массив идентификаторов ингредиентов для заказа
-  const order = [
-    bun._id,
-    ...ingredients.map((ingredient: IIngredient) => ingredient._id),
-    bun._id,
-  ];
+  const order = useMemo(() => {
+    const bunId = bun?._id;
+    const ingredientIds = ingredients.map(
+      (ingredient: IIngredient) => ingredient._id
+    );
+    return bunId ? [bunId, ...ingredientIds] : ingredientIds;
+  }, [bun, ingredients]);
 
   // Рассчитываем общую стоимость бургера с помощью useMemo
   const price = useMemo(() => {

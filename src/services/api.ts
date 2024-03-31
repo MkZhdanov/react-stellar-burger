@@ -1,5 +1,6 @@
 import { BASE_URL } from "../utils/data";
 import { getCookie } from "../utils/cookie";
+import { IOptions } from "../utils/types/types";
 
 // создаем функцию проверки ответа на `ok`
 export const checkResponse = (res: Response) => {
@@ -21,7 +22,7 @@ const checkSuccess = (res: any) => {
 
 // создаем универсальную фукнцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
-const request = (endpoint: string, options?: any) => {
+const request = (endpoint: string, options?: IOptions) => {
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
   return fetch(`${BASE_URL}${endpoint}`, options)
     .then(checkResponse)
@@ -32,7 +33,7 @@ const request = (endpoint: string, options?: any) => {
 export const getFetchIngredientsRequest = () => request("ingredients");
 
 //POST запрос для отправки данных о заказе
-export const postFetchBurgerRequest = (ingredients: any) =>
+export const postFetchBurgerRequest = (ingredients: string[]) =>
   request("orders", {
     method: "POST",
     headers: {

@@ -6,7 +6,11 @@ import {
   REMOVE_BUN_BURGER,
   UPDATE_INGREDIENT_ORDER,
 } from "../constants";
-import { IIngredient, IUuid } from "../../utils/types/types";
+import {
+  IIngredient,
+  IUuid,
+  IUpdateIngredientOrder,
+} from "../../utils/types/types";
 
 export interface IAddBunBurgerAction {
   readonly type: typeof ADD_BUN_BURGER;
@@ -29,7 +33,7 @@ export interface IRemoveBunBurgerAction {
 
 export interface IUpdateIngredientOrderAction {
   readonly type: typeof UPDATE_INGREDIENT_ORDER;
-  readonly payload: any; //////////////////////////////////////////////////////////////
+  readonly payload: IUpdateIngredientOrder;
 }
 
 export type TBurgerConstructorActions =

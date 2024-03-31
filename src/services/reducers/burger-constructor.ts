@@ -9,8 +9,8 @@ import { TBurgerConstructorActions } from "../actions/burger-constructor";
 import { IIngredient, IUuid } from "../../utils/types/types";
 
 type TBurgerConstructorState = {
-  bun: any; ////////////////////////////////////////////////
-  ingredients: any; ////////////////////////////////////////
+  bun: (IIngredient & IUuid) | null;
+  ingredients: (IIngredient & IUuid)[];
 };
 
 // Начальное состояние для редьюсера конструктора бургера
