@@ -59,19 +59,11 @@ const App: FC = () => {
       dispatch(closeOrderModal());
   };
 
-  React.useEffect(() => {
-    dispatch(fetchCheckAccess());
-  }, [dispatch]);
-
-  // Функция для получения данных пользователя и ингредиентов
-  const fetchData = useCallback(() => {
-    dispatch(getIngredients()); // Запрос списка ингредиентов
-  }, [dispatch]);
-
   // Загрузка данных пользователя и ингредиентов при монтировании компонента
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    dispatch(fetchCheckAccess());
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
@@ -83,10 +75,6 @@ const App: FC = () => {
             <Route path="/feed" element={<FeedPage />} />
             <Route path="/feed/:feedNumber" element={<FeedDetails />} />
             <Route path="/ingredients/:id" element={<IngredientDetails />} />
-            <Route
-              path="/profile/orders/:feedNumber"
-              element={<FeedDetails />}
-            />
             <Route
               path="/login"
               element={<UnAuth component={<LoginPage />} />}

@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "../../services/hooks";
+import Loader from "../loader/loader";
 
 interface IProtectedProps {
   unAuth?: boolean;
@@ -13,6 +14,12 @@ const ProtectedRouteElement: FC<IProtectedProps> = ({
 }) => {
   const user = useSelector((state) => state.auth.user);
   const location = useLocation();
+  const isAuthChecked = useSelector((state) => state.auth.userAuth);
+
+  if (!isAuthChecked) {
+    //Запрос еще выполняется
+    return <Loader />;
+  }
 
   if (unAuth && user) {
     // Пользователь авторизован, но роут предназначен для неавторизованного пользователя
@@ -25,6 +32,7 @@ const ProtectedRouteElement: FC<IProtectedProps> = ({
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
+  // !UnAuth && user Пользователь авторизован и роут для авторизованного пользователя
   return <>{component}</>;
 };
 

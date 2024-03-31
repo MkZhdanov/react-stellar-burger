@@ -458,19 +458,20 @@ const accessFailed = (): IGetAccessFailed => {
   };
 };
 
+function checkUserAccessRequest(accessToken: string | undefined) {
+  return fetch(checkAccessUrl, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${accessToken}`,
+    },
+  }).then(checkResponse);
+}
+
 export const fetchCheckAccess = () => {
   return (dispatch: AppDispatch) => {
-    fetch(checkAccessUrl, {
-      method: "GET",
-      headers: {
-        authorization: "Bearer " + getCookie("accessToken"),
-        "Content-Type": "application/json",
-      },
-      // body: JSON.stringify(accessToken),
-    })
-      .then(checkResponse)
+    return checkUserAccessRequest(getCookie("accessToken"))
       .then((res) => {
-        console.log(res);
         dispatch(accessSuccess(res));
       })
       .catch((error) => {
@@ -484,20 +485,17 @@ export const fetchCheckAccess = () => {
   };
 };
 
-//обновление токена
-export const refreshToken = (refreshToken: string | undefined) => {
+const refreshToken = (refreshToken: string | undefined) => {
   return (dispatch: AppDispatch) => {
-    fetch(tokenUrl, {
+    return fetch(tokenUrl, {
       method: "POST",
       headers: {
-        authorization: "",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify({ token: refreshToken }),
     })
       .then(checkResponse)
       .then((res) => {
-        console.log(res);
         dispatch(fetchCheckAccess());
         setCookie("accessToken", res.accessToken.split("Bearer ")[1]);
         setCookie("refreshToken", res.refreshToken);
