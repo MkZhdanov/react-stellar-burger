@@ -14,9 +14,11 @@ const ProtectedRouteElement: FC<IProtectedProps> = ({
 }) => {
   const user = useSelector((state) => state.auth.user);
   const location = useLocation();
-  const isAuthChecked = useSelector((state) => state.auth.userAuth);
+  const isAuthChecked = useSelector(
+    (state) => state.auth.isRequestingGetUserData
+  );
 
-  if (!isAuthChecked) {
+  if (isAuthChecked) {
     //Запрос еще выполняется
     return <Loader />;
   }

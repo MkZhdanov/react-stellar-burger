@@ -45,6 +45,7 @@ type TUserState = {
   loaded: boolean;
   dataUser: IUser | null;
   userAuth: boolean;
+  isRequestingGetUserData: boolean;
   logoutSubmit: boolean;
   logoutFailed: boolean;
   forgotPasswordForm: {
@@ -77,6 +78,7 @@ const initialState: TUserState = {
   loaded: false,
   dataUser: null,
   userAuth: false,
+  isRequestingGetUserData: true,
 
   //выход из аккаунта
   logoutSubmit: false,
@@ -263,6 +265,7 @@ export const authReducer = (state = initialState, actions: TUserActions) => {
       return {
         ...state,
         loaded: true,
+        isRequestingGetUserData: true,
       };
     case GET_ACCESS_SUCCESS:
       return {
@@ -270,12 +273,14 @@ export const authReducer = (state = initialState, actions: TUserActions) => {
         loaded: false,
         user: actions.payload,
         userAuth: true,
+        isRequestingGetUserData: false,
       };
     case GET_ACCESS_FAILED:
       return {
         ...state,
         loaded: false,
         userAuth: false,
+        isRequestingGetUserData: false,
       };
     case UPDATE_INFO_SUBMIT:
       return {

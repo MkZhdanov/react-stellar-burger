@@ -444,7 +444,6 @@ const accessLoaded = (): IGetAccessLoaded => {
     type: GET_ACCESS_LOADED,
   };
 };
-////////проверить на необходимость////////////
 const accessSuccess = (res: IAuthSuccess): IAccessSuccess => {
   return {
     type: GET_ACCESS_SUCCESS,
@@ -470,6 +469,7 @@ function checkUserAccessRequest(accessToken: string | undefined) {
 
 export const fetchCheckAccess = () => {
   return (dispatch: AppDispatch) => {
+    dispatch(accessLoaded());
     return checkUserAccessRequest(getCookie("accessToken"))
       .then((res) => {
         dispatch(accessSuccess(res));
@@ -479,9 +479,7 @@ export const fetchCheckAccess = () => {
           dispatch(refreshToken("refreshToken"));
         }
       })
-      .finally(() => {
-        dispatch(accessLoaded());
-      });
+      .finally(() => {});
   };
 };
 
