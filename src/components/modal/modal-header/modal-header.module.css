@@ -10,7 +10,5 @@
 }
 
 .btn {
-  justify-self: end;
-  height: 64px;
   cursor: pointer;
 }
