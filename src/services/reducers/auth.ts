@@ -132,7 +132,10 @@ const initialState: TUserState = {
   orders: [],
 };
 
-export const authReducer = (state = initialState, actions: TUserActions) => {
+export const authReducer = (
+  state = initialState,
+  actions: TUserActions
+): TUserState => {
   switch (actions.type) {
     case REGISTER_SET_VALUE: // регистрация
       return {
@@ -222,7 +225,7 @@ export const authReducer = (state = initialState, actions: TUserActions) => {
           ...state.forgotPasswordForm,
           email: "",
         },
-        resetEmailSent: true,
+        forgotEmailSent: true,
       };
     case FORGOT_PASSWORD_SUBMIT_FAILED:
       return {

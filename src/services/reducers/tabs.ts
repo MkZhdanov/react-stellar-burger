@@ -16,7 +16,10 @@ const initialState: TTabsState = {
 };
 
 // Редьюсер для управления состоянием вкладок
-export const tabsReducer = (state = initialState, actions: TTabsActions) => {
+export const tabsReducer = (
+  state = initialState,
+  actions: TTabsActions
+): TTabsState => {
   switch (actions.type) {
     // Обработка действия установки активной вкладки
     case SET_ACTIVE_TAB:

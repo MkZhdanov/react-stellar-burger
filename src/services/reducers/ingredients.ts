@@ -23,7 +23,7 @@ const initialState: TIngredientsState = {
 export const ingredientsReducer = (
   state = initialState,
   actions: TIngredientsActions
-) => {
+): TIngredientsState => {
   switch (actions.type) {
     case FETCH_INGREDIENTS:
       // Запуск запроса на получение ингредиентов

@@ -6,7 +6,7 @@ import { TOrderActions } from "./actions/order";
 import { TOrdersActions } from "./actions/orders";
 import { TTabsActions } from "./actions/tabs";
 
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { rootReducer } from "./reducers/";
 import { store } from "./store";
@@ -21,7 +21,8 @@ type TApplicationActions =
   | TOrdersActions
   | TTabsActions;
 
-export type AppDispatch = typeof store.dispatch;
+//export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

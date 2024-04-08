@@ -31,7 +31,7 @@ const initialState: TOrdersState = {
 export const ordersReducer = (
   state = initialState,
   actions: TOrdersActions
-) => {
+): TOrdersState => {
   switch (actions.type) {
     case WS_START:
       // Начало подключения к WebSocket

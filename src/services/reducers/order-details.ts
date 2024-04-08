@@ -26,7 +26,7 @@ const initialState: TOrderDetailsState = {
 export const orderDetailsReducer = (
   state = initialState,
   actions: TOrderDetailsActions
-) => {
+): TOrderDetailsState => {
   switch (actions.type) {
     // Установка состояния загрузки и сброс предыдущего заказа и ошибки
     case CREATE_ORDER_REQUEST:
